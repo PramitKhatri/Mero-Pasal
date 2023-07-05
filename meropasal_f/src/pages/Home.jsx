@@ -10,7 +10,10 @@ const Home = () => {
 
     <h1 className="text-3xl font-bold underline">
       Hello world!
+      <br/>
       <Link to="/signup">signup</Link>
+      <br />
+      <Link to='/login'>Login</Link>
     </h1>
   
 

@@ -34,3 +34,17 @@ def signup(request):
             return JsonResponse({'error': 'Username has already been taken'}, status=400)
 
 
+@csrf_exempt
+def login(request):
+    if request.method== 'POST':
+        data=JSONParser().parse(request)
+        user=authenticate(request,email=data['email'],password=data['password'])
+
+        if user is None:
+            return JsonResponse({'error':'email or password doesnot match'},status=400)
+        else:
+            try:
+                token=Token.objects.get(user=user)
+            except:
+                token=Token.objects.create(user=user)
+            return JsonResponse({'token':str(token)},status=200)
