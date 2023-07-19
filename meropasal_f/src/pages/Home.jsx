@@ -9,7 +9,7 @@ const Home = () => {
     <Card/>
 
     <h1 className="text-3xl font-bold underline">
-      Hello world!
+      Welcome!! 
       <br/>
       <Link to="/signup">signup</Link>
       <br />

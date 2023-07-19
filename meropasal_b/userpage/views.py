@@ -22,7 +22,7 @@ def signup(request):
 
             user = User.objects.create_user(
                 username=data['username'],
-                email=email,
+                email=data['email'],
                 password=data['password'],
                 first_name=data['first_name'],
                 last_name=data['last_name']
@@ -38,10 +38,10 @@ def signup(request):
 def login(request):
     if request.method== 'POST':
         data=JSONParser().parse(request)
-        user=authenticate(request,email=data['email'],password=data['password'])
+        user=authenticate(request,username=data['username'],password=data['password'])
 
         if user is None:
-            return JsonResponse({'error':'email or password doesnot match'},status=400)
+            return JsonResponse({'error':'email or password doesnot match'},status=status.HTTP_404_NOT_FOUND)
         else:
             try:
                 token=Token.objects.get(user=user)

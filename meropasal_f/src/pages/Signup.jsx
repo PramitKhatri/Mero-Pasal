@@ -15,19 +15,38 @@ const Signup = () => {
 
     const navigate = useNavigate()
 
+    const validate = () => {
+        const errors = {}  //errors contain objects which is initially empty and is set by the if else function below. the values are stored as errors={ username: 'usernamis is required',}
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        if (!first_name) {
+            errors.first_name = 'First Name is required!'  //this sets the error for firstname
+        }
+        if (!last_name) {
+            errors.last_name = 'Last Name is required!'
+        }
+        if (!username) {
+            errors.username = 'Username is required!'
+        }
+        if (!email) {
+            errors.email = 'Email is required!'
+        } else if (!regex.test(email)) {
+            errors.email = 'This is not a valid email format!'
+        }
+        if (!password) {
+            errors.password = 'Password is required'
+        } else if (password.length < 4) {
+            errors.password = 'Password must be more than 4 characters'
+        }
+        return errors
+    }
+
     const signupsubmit = async (e) => {
         e.preventDefault()
         const errors = validate()
         setFormErrors(errors)    //this takes the errors object from below and pushes it to usestate()
         if (Object.keys(errors).length === 0) {
             try {
-                await axios.post('http://localhost:8000/signup/', {
-                    first_name,
-                    last_name,
-                    username,
-                    email,
-                    password,
-                });
+                await axios.post('http://localhost:8000/signup/', {first_name,last_name,username,email, password,})
                 toast.success('Registration Successful')
                 setFirstname('')
                 setLastname('')
@@ -49,30 +68,7 @@ const Signup = () => {
 
 
 
-    const validate = () => {
-        const errors = {}  //errors contain objects which is initially empty and is set by the if else function below. the values are stored as errors={ username: 'usernamis is required',}
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!first_name) {
-            errors.first_name = 'First Name is required!'  //this sets the error for firstname
-        }
-        if (!last_name) {
-            errors.last_name = 'Last Name is required!'
-        }
-        if (!username) {
-            errors.username = 'Username is required!'
-        }
-        if (!email) {
-            errors.email = 'Email is required!'
-        } else if (!regex.test(email)) {
-            errors.email = 'This is not a valid email format!'
-        }
-        if (!password) {
-            errors.password = 'Password is required'
-        } else if (password.length < 7) {
-            errors.password = 'Password must be more than 7 characters'
-        }
-        return errors
-    }
+    
 
     return (
         <>
