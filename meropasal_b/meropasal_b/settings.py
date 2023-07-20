@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'userpage',
+    'home',
+    'seller',
+
+
 ]
 
 
@@ -62,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 CORS_ALLOWED_ORIGINS = [   
     "http://localhost:3000",
 ]
@@ -80,7 +85,7 @@ ROOT_URLCONF = 'meropasal_b.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],  #changed
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -147,3 +152,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+# -------------------------------chnges stuff and new additions--------------------
+AUTH_USER_MODEL='seller.Seller'  #this is so that i can use user authentication methods in Seller as well. This doesn't seem to affect the original User model for now. lets see.
