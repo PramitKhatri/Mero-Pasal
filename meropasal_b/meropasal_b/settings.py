@@ -157,4 +157,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # -------------------------------chnges stuff and new additions--------------------
-AUTH_USER_MODEL='seller.Seller'  #this is so that i can use user authentication methods in Seller as well. This doesn't seem to affect the original User model for now. lets see.
+#AUTH_USER_MODEL='seller.Seller'  #this is so that i can use user authentication methods in Seller as well. This doesn't seem to affect the original User model for now. lets see.

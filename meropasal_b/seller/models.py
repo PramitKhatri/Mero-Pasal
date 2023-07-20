@@ -37,5 +37,9 @@ class Seller(AbstractBaseUser,PermissionsMixin):
     EMAIL_FIELD='email'
     REQUIRED_FIELDS=[]
 
+   # Provide unique related names for groups and user_permissions
+    groups = models.ManyToManyField('auth.Group', related_name='seller_users')
+    user_permissions = models.ManyToManyField('auth.Permission', related_name='seller_users')
+
     def __str__(self):
         return self.email
