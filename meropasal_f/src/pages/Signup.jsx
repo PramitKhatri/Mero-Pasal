@@ -43,7 +43,7 @@ const Signup = () => {
     const signupsubmit = async (e) => {
         e.preventDefault()
         const errors = validate()
-        setFormErrors(errors)    //this takes the errors object from below and pushes it to usestate()
+        setFormErrors(errors)    //this takes the errors object from abiove and pushes it to usestate()
         if (Object.keys(errors).length === 0) {
             try {
                 await axios.post('http://localhost:8000/signup/', {first_name,last_name,username,email, password,})
@@ -53,11 +53,14 @@ const Signup = () => {
                 setUsername('')
                 setEmail('')
                 setPassword('')
+                setIsSubmit(true)
             } catch (err) {
                 toast.error(err.response.data.error)
             }
+            
+        }else{
+            console.log('registration failed')
         }
-        setIsSubmit(true)
     }
 
     useEffect(() => {
