@@ -78,12 +78,26 @@ const SellerRegister = () => {
 
     const sellersubmit = async (e) => {
         e.preventDefault()
-        const geterrors = ValidateForm()  //call the validateform function and store the output in geterrors
+        const geterrors = ValidateForm()  //call the validateform function and store the output in geterrors instance
         setFormErrors(geterrors)
 
         if (Object.keys(formErrors).length === 0) {
             try {
-                await axios.post('http://localhost:8000/sellerregister/', { email, password, first_name, last_name, company_name, seller_desc, seller_image, seller_verification})
+                const formData = new FormData()  //formdata is an instance of FormData. FormData is a bult in javascript class that is used to handle multiple types of data post. when the data being sent is not just json data. Here we haave file uploads as well.
+                formData.append('email', email)  //the first 'email' refers to the name of the field that will be sent in the HTTP request as part of the form data. The second email is the variable that holds the value of the email input field in your front-end form.
+                formData.append('password', password)
+                formData.append('first_name', first_name)
+                formData.append('last_name', last_name)
+                formData.append('company_name', company_name)
+                formData.append('seller_desc', seller_desc)
+                formData.append('seller_image', seller_image)
+                formData.append('seller_verification', seller_verification)
+
+                await axios.post('http://localhost:8000/sellerregister/', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'  //Set the appropriate content type for form data since the data also has files else it would be application/json
+                    }
+                })
                 toast.success('Registration Successful')
                 setEmail('')
                 setpassword('')
@@ -120,7 +134,7 @@ const SellerRegister = () => {
         <>
             <section>
                 <ToastContainer theme="colored" position="top-right" />
-                <form  onSubmit={sellersubmit} encType="multipart/form-data">
+                <form onSubmit={sellersubmit} encType="multipart/form-data">
                     <div >
                         <div >
                             <div >

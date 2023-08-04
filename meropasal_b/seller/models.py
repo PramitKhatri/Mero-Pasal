@@ -27,8 +27,8 @@ class Seller(AbstractBaseUser,PermissionsMixin):
     is_staff=models.BooleanField(default=False)
     company_name=models.CharField(max_length=100)
     seller_desc=models.TextField()
-    seller_image=models.FileField(upload_to='static/uploads/sellers',null=True)
-    seller_verification=models.FileField(upload_to='static/uploads/sellerVerification',null=True)
+    seller_image=models.FileField(upload_to='seller/sellerImage',null=True)
+    seller_verification=models.FileField(upload_to='seller/sellerVerification',null=True)
     created_at=models.DateTimeField(auto_now_add=True)
     status=models.BooleanField(default=False,null=True)  #verification status
 

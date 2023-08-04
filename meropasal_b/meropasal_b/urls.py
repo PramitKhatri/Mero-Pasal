@@ -16,10 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('userpage.urls')),
     path('',include('home.urls')),
     path('',include('seller.urls')),
-]
+
+] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)  #this handles the user file inputs and puts in the media file since even if the django gets the file it doesnot know what to do with it
