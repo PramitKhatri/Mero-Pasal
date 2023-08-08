@@ -46,8 +46,9 @@ const Signup = () => {
         setFormErrors(errors)    //this takes the errors object from abiove and pushes it to usestate()
         if (Object.keys(errors).length === 0) {
             try {
-                await axios.post('http://localhost:8000/signup/', {first_name,last_name,username,email, password,})
+                await axios.post('http://localhost:8000/signup/', {first_name,last_name,username,email, password})
                 toast.success('Registration Successful')
+                console.log(FormData)
                 setFirstname('')
                 setLastname('')
                 setUsername('')

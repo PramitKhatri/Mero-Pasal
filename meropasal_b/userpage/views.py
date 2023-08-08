@@ -15,6 +15,7 @@ def signup(request):
     if request.method == 'POST':
         try:
             data = JSONParser().parse(request)
+            print(data)
             email = data['email']
 
             if User.objects.filter(email=email).exists():
@@ -38,7 +39,9 @@ def signup(request):
 def login(request):
     if request.method== 'POST':
         data=JSONParser().parse(request)
-        user=authenticate(request,username=data['username'],password=data['password'])
+        print(data)
+        user=authenticate(request,username=data['email'],password=data['password'])
+        # print(request.POST)  is for when content type is multipart/form-data
 
         if user is None:
             return JsonResponse({'error':'email or password doesnot match'},status=status.HTTP_404_NOT_FOUND)
