@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 const Signup = () => {
     const [first_name, setFirstname] = useState('')
     const [last_name, setLastname] = useState('')
-    const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [formErrors, setFormErrors] = useState({})
@@ -24,9 +23,7 @@ const Signup = () => {
         if (!last_name) {
             errors.last_name = 'Last Name is required!'
         }
-        if (!username) {
-            errors.username = 'Username is required!'
-        }
+        
         if (!email) {
             errors.email = 'Email is required!'
         } else if (!regex.test(email)) {
@@ -46,12 +43,11 @@ const Signup = () => {
         setFormErrors(errors)    //this takes the errors object from abiove and pushes it to usestate()
         if (Object.keys(errors).length === 0) {
             try {
-                await axios.post('http://localhost:8000/signup/', {first_name,last_name,username,email, password})
+                await axios.post('http://localhost:8000/signup/', {first_name,last_name,email, password})
                 toast.success('Registration Successful')
                 console.log(FormData)
                 setFirstname('')
                 setLastname('')
-                setUsername('')
                 setEmail('')
                 setPassword('')
                 setIsSubmit(true)
@@ -113,22 +109,7 @@ const Signup = () => {
                                     <p className="text-red-500">{formErrors.last_name}</p>
                                 )}
                             </div>
-                            <div className="mb-2">
-                                <label htmlFor="uname" className="m-1 block">
-                                    UserName
-                                </label>
-                                <input
-                                    type="text"
-                                    name="username"
-                                    id="uname"
-                                    className="form-input border-4 h-10 w-40 ml-5"
-                                    onChange={(event) => setUsername(event.target.value)}
-                                    value={username}
-                                />
-                                {formErrors.username && (
-                                    <p className="text-red-500">{formErrors.username}</p>
-                                )}
-                            </div>
+                            
                             <div className="mb-2">
                                 <label htmlFor="email" className="m-1 block">
                                     Email

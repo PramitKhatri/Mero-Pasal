@@ -5,8 +5,9 @@ from django.http import JsonResponse
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,get_user_model
 from rest_framework import status
+user=get_user_model()
 
 # Create your views here.
 # In django the username field of User model needs to be unique but this can be changed by addning a custom user and modifying the User location in settings.py.This can be done but is unnecssary and complicated so here you can't use same email and usernames but this can be changed by creating a custom user which i am not in the mood to create 
@@ -19,10 +20,10 @@ def signup(request):
             email = data['email']
 
             if User.objects.filter(email=email).exists():
-                return JsonResponse({'error': 'Email has already been taken. Try another'}, status=400)
+                return JsonResponse({'error': 'You already have an account with this email.'}, status=400)
 
             user = User.objects.create_user(
-                username=data['username'],
+                username=data['email'],
                 email=data['email'],
                 password=data['password'],
                 first_name=data['first_name'],
@@ -30,9 +31,29 @@ def signup(request):
             )
             user.save()
             token = Token.objects.create(user=user)
-            return JsonResponse({'token': str(token)}, status=201)
+
+            def roles(user):
+                if user.is_superuser==True:
+                    role='admin'
+                else:
+                    role='user' 
+                return role
+
+            user_data={
+                'id':user.id,
+                'email':user.email,
+                'first_name':user.first_name,
+                'last_name':user.last_name,
+                'role':roles(user)
+
+            }
+            response_data={
+                'token':str(token),
+                'user':user_data
+            }
+            return JsonResponse(response_data, status=201)
         except IntegrityError:
-            return JsonResponse({'error': 'Username has already been taken'}, status=400)
+            return JsonResponse({'error': 'something went wrong!'}, status=400)
 
 
 @csrf_exempt
@@ -40,8 +61,9 @@ def login(request):
     if request.method== 'POST':
         data=JSONParser().parse(request)
         print(data)
-        user=authenticate(request,username=data['email'],password=data['password'])
+        user=authenticate(request,username=data['email'],password=data['password'])  #authenticate only works with username and password
         # print(request.POST)  is for when content type is multipart/form-data
+        
 
         if user is None:
             return JsonResponse({'error':'email or password doesnot match'},status=status.HTTP_404_NOT_FOUND)
@@ -50,4 +72,25 @@ def login(request):
                 token=Token.objects.get(user=user)
             except:
                 token=Token.objects.create(user=user)
-            return JsonResponse({'token':str(token)},status=200)
+
+                #i wrote this if else completely blind and it works lol :)
+            def roles(user):
+                if user.is_superuser==True:
+                    role='admin'
+                else:
+                    role='user' 
+                return role
+
+            user_data={
+                'id':user.id,
+                'email':user.email,
+                'first_name':user.first_name,
+                'last_name':user.last_name,
+                'role':roles(user)
+
+            }
+            response_data={
+                'token':str(token),
+                'user':user_data
+            }
+            return JsonResponse(response_data,status=200)

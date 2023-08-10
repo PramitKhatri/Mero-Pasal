@@ -18,6 +18,14 @@ const Home = () => {
       <Link to='/sellerregister'>Seller register</Link>
       <br />
       <Link to='/sellerlogin'>Seller login</Link>
+      <br />
+      <Link to='/admin'>Admin page</Link>
+      <br />
+      <Link to='/seller'>Seller Homepage</Link>
+      <br />
+      <Link to='/unauthorized'>Unauthorized</Link>
+      <br />
+      <Link to='/lounge'>Lounge</Link>
     </h1>
   
 

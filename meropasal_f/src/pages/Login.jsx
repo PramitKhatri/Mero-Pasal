@@ -1,13 +1,21 @@
 import axios from 'axios'
-import React, { useEffect, useState, useContext } from 'react'
-import AuthContext from '../context/AuthProvider'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState, /*useContext*/ } from 'react'
+// import AuthContext from '../context/AuthProvider'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import useAuth from '../hooks/useAuth'
 
 
 const Login = () => {
-    const { setAuthentication } = useContext(AuthContext)
+    // const { setAuthentication } = useContext(AuthContext)
+    const {setAuthentication}=useAuth()
+
+    const navigate=useNavigate()
+    const location=useLocation()
+    const from=location.state?.from?.pathname || '/'
+
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errMsg, SetErrMsg] = useState('')
@@ -22,24 +30,30 @@ const Login = () => {
         console.log(`${email}`, `${password}`)
         try {
             const response = await axios.post(`http://localhost:8000/login/`, JSON.stringify({ email, password }),{headers:{"Content-Type":"application/json"}})
+            
             console.log(JSON.stringify(response))
-            const accessToken=response?.data?.token
-            const roles=response?.data?.roles
-            setAuthentication({email,password,accessToken,roles})
+            // const accessToken=response?.data?.token
+            // const email=response?.data?.user?.email
+            // const first_name=response?.data?.user?.first_name
+            // const last_name=response?.data?.user?.last_name
+            // const roles=response?.data?.user?.roles
+            // setAuthentication({accessToken,email,first_name,last_name,roles})
+            
             setEmail('')
             setPassword('')
             toast.success('login works')
             setIsloggedin(true)
+            navigate(from,{replace:true})
         }
         catch (err) {
             if(!err?.response){
                 SetErrMsg('no server response')
-            }else if (err.responce?.status===400){
+            }else if (err.response?.status===400){
                 SetErrMsg('missing username or password')
             }else{
                 SetErrMsg('Login failed')
             }
-            toast.error(err.response.data.error)
+            toast.error(err.response?.data?.error)
         }
 
 
