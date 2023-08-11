@@ -4,12 +4,12 @@ import React, { useEffect, useState, /*useContext*/ } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import useAuth from '../hooks/useAuth'
+// import useAuth from '../hooks/useAuth'
 
 
 const Login = () => {
     // const { setAuthentication } = useContext(AuthContext)
-    const {setAuthentication}=useAuth()
+    // const {setAuthentication}=useAuth()
 
     const navigate=useNavigate()
     const location=useLocation()
@@ -30,14 +30,17 @@ const Login = () => {
         console.log(`${email}`, `${password}`)
         try {
             const response = await axios.post(`http://localhost:8000/login/`, JSON.stringify({ email, password }),{headers:{"Content-Type":"application/json"}})
-            
-            console.log(JSON.stringify(response))
+            console.log(JSON.stringify(response.data))
+            localStorage.setItem('user',JSON.stringify(response.data) || [])
             // const accessToken=response?.data?.token
-            // const email=response?.data?.user?.email
+            // // const email=response?.data?.user?.email
             // const first_name=response?.data?.user?.first_name
             // const last_name=response?.data?.user?.last_name
-            // const roles=response?.data?.user?.roles
-            // setAuthentication({accessToken,email,first_name,last_name,roles})
+            // const role=response?.data?.user?.role
+            // setAuthentication({ accessToken, email, first_name, last_name, role })
+            
+            // console.log({accessToken, email, first_name, last_name, role})
+            // console.log(setAuthentication)
             
             setEmail('')
             setPassword('')

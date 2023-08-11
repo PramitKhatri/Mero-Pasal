@@ -30,11 +30,12 @@ function App() {
           <Route path="sellerlogin" element={<SellerLogin />} />
 
           {/* the below ones are protected routes which will check the roles that are given from the backend */}
-          <Route element={<RequireAuth allowedRoles={['admin']} />}>
+          {/* <Route element={<RequireAuth allowedRoles={['admin']}/>}> */}
+          <Route element={<RequireAuth allowedRoles={['admin']}/>}>
             <Route path='admin' element={<Admin />} />
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={['seller']} />}>
+          <Route element={<RequireAuth allowedRoles={['seller']}/>}>
             <Route path="seller" element={<SellerHomepage />} />
           </Route>
 

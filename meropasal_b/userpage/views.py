@@ -93,4 +93,6 @@ def login(request):
                 'token':str(token),
                 'user':user_data
             }
+            print(response_data)
             return JsonResponse(response_data,status=200)
+            
