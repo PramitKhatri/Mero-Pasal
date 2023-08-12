@@ -1,4 +1,3 @@
-from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from .serializers import *
@@ -8,14 +7,26 @@ from django.http import JsonResponse
 
 from django.db import IntegrityError
 from rest_framework import status,viewsets,permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
-from django.contrib.auth import authenticate
+from seller.authenticator import SellerAuthenticator  #Custom authenticator for Seller as it is using  email as unique field
+authenticate_seller=SellerAuthenticator()  #creating a instance for the class to use authenticate function inside it. can be named anything just not the same name as the function name.
 
 from rest_framework.exceptions import ParseError
 
+# to generate tokens for seller, we have to do it manually since again, Seller is a custom user model.
+from rest_framework_simplejwt.tokens import RefreshToken
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 # Create your views here.
-
+#cerf_exempt is not the recommended way to handle user registration and login as they are vulnerable to cross site forgery attacks ???
 @csrf_exempt
 def sellerregister(request):
     if request.method=='POST':
@@ -66,6 +77,39 @@ def sellerlogin(request):
             return JsonResponse({'token':str(token)},status=status.HTTP_200_OK)
 
 
+#APIView is a class-based view provided by DRF that acts as a base view for building API endpoints.
+#  It provides a structured way to define HTTP methods like GET, POST, PUT, DELETE, etc., and
+#  handles the processing of requests and responses. 
+# You define the behavior of these methods by implementing their corresponding functions (get, post, put, delete, etc.) within your view class.
+class SellerRegistrationView(APIView):  #
+    def post(self,request,format=None):
+        serializer=SellerRegistrationSerializer(data=request.data) #data comes in request.data, serializer will have two things that we can use serializer.data and serializer.errors
+
+        if serializer.is_valid(raise_exception=True): #raise_exception=True: This ensures that if the serializer encounters any validation errors while processing the input data (such as missing required fields or invalid formats), a validation exception will be raised, and the view will return a 400 Bad Request response with the validation errors.      helps in a way that it will return a proper response than saying an error occurred
+            seller=serializer.save()
+            token=get_tokens_for_user(seller)
+            return Response({'token':token,'msg':'Registration Successful'},status=status.HTTP_201_CREATED)
+            
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class SellerLoginView(APIView):
+    def post(self,request,format=None):
+        serializer=SellerLoginSerializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            email=serializer.data.get('email')
+            password=serializer.data.get('password')
+            seller=authenticate_seller.authenticate(request,email=email,password=password)
+
+            if seller is not None:
+                token=get_tokens_for_user(seller)
+                return Response({'token':token,'msg':'Login Success'},status=status.HTTP_200_OK)
+            else:
+                return Response({'errors':{'non_field_errors':['Email or password is not valid']}}, status=status.HTTP_404_NOT_FOUND) #when serializer sends an error, it can send non_field_errors as one of the error response but in frontend we catch that error as errors to get all the errors. so to also obtain the non_field_error, we send it inside errors as an object that we will probably jsonify
+
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class SellerViewSet(viewsets.ModelViewSet):
     queryset=Seller.objects.all()

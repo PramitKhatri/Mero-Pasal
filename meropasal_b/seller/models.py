@@ -20,7 +20,7 @@ class SellerUserManager(BaseUserManager):
 
 # Since sellers would be different types of users they are custom users inherited from abstractbaseuser
 class Seller(AbstractBaseUser,PermissionsMixin):
-    email=models.EmailField(unique=True)   # i don't have to create a passeord field as it is automatically inherited from abstractuser
+    email=models.EmailField(unique=True,max_length=255,)   # i don't have to create a passeord field as it is automatically inherited from abstractuser
     first_name=models.CharField(max_length=100)
     last_name=models.CharField(max_length=100)
     is_active=models.BooleanField(default=True)
@@ -30,6 +30,7 @@ class Seller(AbstractBaseUser,PermissionsMixin):
     seller_image=models.FileField(upload_to='seller/sellerImage',null=True)
     seller_verification=models.FileField(upload_to='seller/sellerVerification',null=True)
     created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateField(auto_now=True)
     status=models.BooleanField(default=False,null=True)  #verification status
 
 
