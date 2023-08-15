@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider";
 import axios from "axios";
 
 const SellerLogin = () => {
-  const { setAuthentication } = useContext(AuthContext)  //this sends the data we get from backend (token) to setauthentication which is catched by children
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -20,11 +18,10 @@ const SellerLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response=await axios.post('http://localhost:8000/sellerlogin/',{email:email,password:password})  //the front email is from db and back is from this app
-      console.log(JSON.stringify(response))
-      const accessToken=response.data.token
+      const response=await axios.post('http://localhost:8000/slogin/',JSON.stringify({email,password}),{headers:{"Content-Type":"application/json"}})  //the front email is from db and back is from this app
+      console.log(JSON.stringify(response.data))
+      localStorage.setItem('user',JSON.stringify(response.data)|| [])
 
-      setAuthentication({email,password,accessToken})
 
       setEmail('')
       setPassword('')
@@ -34,7 +31,7 @@ const SellerLogin = () => {
         if(!err?.response){  //if no response from server
           setErrMsg('No server response')
         } else if (err.response?.status===400){
-          setErrMsg('Missing usename or password')
+          setErrMsg('Missing username or password')
         } else{
           setErrMsg('login failed')
         }
@@ -48,7 +45,7 @@ const SellerLogin = () => {
     if (success) {
       navigate('/')
     }
-  })
+  },[success,navigate])
 
   return (
     <>
@@ -58,15 +55,15 @@ const SellerLogin = () => {
 
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit} >
-          <label htmlFor="email" autoComplete="off" onChange={(e) => setEmail(e.target.value)} value={email} required>Email:</label>
-          <input type="email" id="email" /> <br />
+          <label htmlFor="email" >Email:</label>
+          <input type="email" id="email" autoComplete="off" onChange={(e) => setEmail(e.target.value)} value={email} required /> <br />
 
           <label htmlFor="pwd">Password:</label>
           <input type="password" id="pwd" onChange={(e) => setPassword(e.target.value)} value={password} /> <br />
 
           <button>Sign In</button> {/* you dont have to say type=submit since thsi is the only button in form */}
         </form><br />
-        <p>Don't have an account? <span><a href="/sellerregister">SignUn</a></span></p>
+        <p>Don't have an account? <span><a href="/sellerregister">SignUp</a></span></p>
 
 
       </section>

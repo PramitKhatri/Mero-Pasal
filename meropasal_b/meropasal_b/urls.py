@@ -29,6 +29,8 @@ urlpatterns = [
     path('',include('userpage.urls')),
     path('',include('home.urls')),
     path('',include('seller.urls')),
+    path('',include('product.urls')),
+    path('',include('category.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 

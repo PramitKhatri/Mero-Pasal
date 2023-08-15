@@ -93,11 +93,12 @@ const SellerRegister = () => {
                 formData.append('seller_image', seller_image)
                 formData.append('seller_verification', seller_verification)
 
-                await axios.post('http://localhost:8000/sellerregister/', formData, {
+                const response = await axios.post('http://localhost:8000/sregister/', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'  //Set the appropriate content type for form data since the data also has files else it would be application/json
                     }
                 })
+                localStorage.setItem('user', JSON.stringify(response.data) || [])
                 toast.success('Registration Successful')
                 setEmail('')
                 setpassword('')
@@ -123,7 +124,7 @@ const SellerRegister = () => {
     }
     useEffect(() => {
         if (success) {
-            navigate('sellerlogin')
+            navigate('../seller')
         }
 
     })

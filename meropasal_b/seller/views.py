@@ -88,15 +88,37 @@ class SellerRegistrationView(APIView):  #
         if serializer.is_valid(raise_exception=True): #raise_exception=True: This ensures that if the serializer encounters any validation errors while processing the input data (such as missing required fields or invalid formats), a validation exception will be raised, and the view will return a 400 Bad Request response with the validation errors.      helps in a way that it will return a proper response than saying an error occurred
             seller=serializer.save()
             token=get_tokens_for_user(seller)
-            return Response({'token':token,'msg':'Registration Successful'},status=status.HTTP_201_CREATED)
+            seller_data={
+                    'id':seller.id,
+                    'email':seller.email,
+                    'first_name':seller.first_name,
+                    'last_name':seller.last_name,
+                    'company_name':seller.company_name,
+                    'seller_desc':seller.seller_desc,
+                    'status':seller.status,
+                    'role':'seller'
+                }
+                # since image and verifications are files, we put there urls instead
+            if seller.seller_image:
+                seller_data['seller_image'] =seller.seller_image.url
             
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            if seller.seller_verification:
+                seller_data['seller_verification'] =seller.seller_verification.url
+            
+            response_data={
+                    'token':str(token),
+                    'user':seller_data
+                }
+            return JsonResponse(response_data,status=status.HTTP_201_CREATED)
+            
+        return JsonResponse(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
 
 class SellerLoginView(APIView):
     def post(self,request,format=None):
         serializer=SellerLoginSerializer(data=request.data)
+        print(request.data)
 
         if serializer.is_valid(raise_exception=True):
             email=serializer.data.get('email')
@@ -105,11 +127,31 @@ class SellerLoginView(APIView):
 
             if seller is not None:
                 token=get_tokens_for_user(seller)
-                return Response({'token':token,'msg':'Login Success'},status=status.HTTP_200_OK)
-            else:
-                return Response({'errors':{'non_field_errors':['Email or password is not valid']}}, status=status.HTTP_404_NOT_FOUND) #when serializer sends an error, it can send non_field_errors as one of the error response but in frontend we catch that error as errors to get all the errors. so to also obtain the non_field_error, we send it inside errors as an object that we will probably jsonify
+                seller_data={
+                    'id':seller.id,
+                    'email':seller.email,
+                    'first_name':seller.first_name,
+                    'last_name':seller.last_name,
+                    'company_name':seller.company_name,
+                    'seller_desc':seller.seller_desc,
+                    'status':seller.status,
+                    'role':'seller'
+                }
+            if seller.seller_image:
+                seller_data['seller_image'] =seller.seller_image.url
+            
+            if seller.seller_verification:
+                seller_data['seller_verification'] =seller.seller_verification.url
 
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+                response_data={
+                    'token':str(token),
+                    'user':seller_data
+                }
+                return JsonResponse(response_data,status=status.HTTP_200_OK)
+            else:
+                return JsonResponse({'errors':{'non_field_errors':['Email or password is not valid']}}, status=status.HTTP_404_NOT_FOUND) #when serializer sends an error, it can send non_field_errors as one of the error response but in frontend we catch that error as errors to get all the errors. so to also obtain the non_field_error, we send it inside errors as an object that we will probably jsonify
+
+        return JsonResponse(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class SellerViewSet(viewsets.ModelViewSet):
     queryset=Seller.objects.all()

@@ -32,15 +32,6 @@ const Login = () => {
             const response = await axios.post(`http://localhost:8000/login/`, JSON.stringify({ email, password }),{headers:{"Content-Type":"application/json"}})
             console.log(JSON.stringify(response.data))
             localStorage.setItem('user',JSON.stringify(response.data) || [])
-            // const accessToken=response?.data?.token
-            // // const email=response?.data?.user?.email
-            // const first_name=response?.data?.user?.first_name
-            // const last_name=response?.data?.user?.last_name
-            // const role=response?.data?.user?.role
-            // setAuthentication({ accessToken, email, first_name, last_name, role })
-            
-            // console.log({accessToken, email, first_name, last_name, role})
-            // console.log(setAuthentication)
             
             setEmail('')
             setPassword('')

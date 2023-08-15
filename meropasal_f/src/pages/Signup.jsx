@@ -23,7 +23,7 @@ const Signup = () => {
         if (!last_name) {
             errors.last_name = 'Last Name is required!'
         }
-        
+
         if (!email) {
             errors.email = 'Email is required!'
         } else if (!regex.test(email)) {
@@ -43,9 +43,10 @@ const Signup = () => {
         setFormErrors(errors)    //this takes the errors object from abiove and pushes it to usestate()
         if (Object.keys(errors).length === 0) {
             try {
-                await axios.post('http://localhost:8000/signup/', {first_name,last_name,email, password})
+                const response = await axios.post('http://localhost:8000/signup/', { first_name, last_name, email, password })
                 toast.success('Registration Successful')
                 console.log(FormData)
+                localStorage.setItem('user', JSON.stringify(response.data) || [])
                 setFirstname('')
                 setLastname('')
                 setEmail('')
@@ -54,8 +55,8 @@ const Signup = () => {
             } catch (err) {
                 toast.error(err.response.data.error)
             }
-            
-        }else{
+
+        } else {
             console.log('registration failed')
         }
     }
@@ -68,7 +69,7 @@ const Signup = () => {
 
 
 
-    
+
 
     return (
         <>
@@ -109,7 +110,7 @@ const Signup = () => {
                                     <p className="text-red-500">{formErrors.last_name}</p>
                                 )}
                             </div>
-                            
+
                             <div className="mb-2">
                                 <label htmlFor="email" className="m-1 block">
                                     Email

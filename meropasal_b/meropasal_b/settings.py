@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'userpage',
     'home',
     'seller',
+    'category',
+    'product',
 
 
 ]
@@ -48,10 +50,19 @@ REST_FRAMEWORK={
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
+        
+    ],'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+    
     # When In production, the below should be uncommented. What it does is make your api views in your browser to only show json data and not allow the get, post , add methods directly to your serializer
     # 'DEFAULT_RENDERER_CLASSES':('rest_framework.renderers.JSONRenderer',)
 }
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.IsAuthenticated',
+#     ]
+# }
 
 
 #defining custom authenticator because we are using two user models
