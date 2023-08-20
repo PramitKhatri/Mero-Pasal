@@ -15,7 +15,7 @@ const AddCategory = () => {
         if (!category) {
             setErrors('Category cannot be null')
         } else {
-            axios.post('http://localhost:8000/addCategory/', { category: category }, { headers: { "Content-Type": "application/json", "Authorization": `Token ${userdata.token}` } })
+            axios.post('http://localhost:8000/Category/', { category: category }, { headers: { "Content-Type": "application/json", "Authorization": `Token ${userdata.token}` } })
                 .then(res => {
                     console.log(res.data)
                     toast.success(res.data.msg)

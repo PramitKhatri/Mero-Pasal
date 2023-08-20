@@ -85,13 +85,17 @@ const SellerRegister = () => {
             try {
                 const formData = new FormData()  //formdata is an instance of FormData. FormData is a bult in javascript class that is used to handle multiple types of data post. when the data being sent is not just json data. Here we haave file uploads as well.
                 formData.append('email', email)  //the first 'email' refers to the name of the field that will be sent in the HTTP request as part of the form data. The second email is the variable that holds the value of the email input field in your front-end form.
+                console.log(formData)
                 formData.append('password', password)
+                console.log(formData)
                 formData.append('first_name', first_name)
                 formData.append('last_name', last_name)
                 formData.append('company_name', company_name)
                 formData.append('seller_desc', seller_desc)
                 formData.append('seller_image', seller_image)
                 formData.append('seller_verification', seller_verification)
+
+                console.log(formData)
 
                 const response = await axios.post('http://localhost:8000/sregister/', formData, {
                     headers: {

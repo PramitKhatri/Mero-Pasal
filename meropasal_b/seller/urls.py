@@ -7,7 +7,7 @@ router.register(r'seller',SellerViewSet)  # the r is not required but    Using t
 
 urlpatterns=[
     path('sellerregister/',sellerregister),
-    path('sellerlogin',sellerlogin),
+    path('sellerlogin/',sellerlogin),
     path('api/',include(router.urls)),  #The router will generate the following URLs for the SellerViewSet:       /api/seller/: List and create view           /api/seller/{pk}/: Retrieve, update, and delete view for individual sellers
     path('sregister/',SellerRegistrationView.as_view(),name='sregister'),
     path('slogin/',SellerLoginView.as_view(),name='slogin'),

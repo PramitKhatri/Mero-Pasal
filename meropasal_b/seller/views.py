@@ -7,6 +7,7 @@ from django.http import JsonResponse
 
 from django.db import IntegrityError
 from rest_framework import status,viewsets,permissions
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -64,16 +65,16 @@ def sellerregister(request):
 def sellerlogin(request):
     if request.method=='POST':
         data=JSONParser().parse(request)
-        seller=authenticate(request,email=data['email'],password=data['password'])
+        seller=authenticate_seller.authenticate(request,email=data['email'],password=data['password'])
 
 
         if seller is None:
             return JsonResponse({'error':'email or password doesnot match'},status=status.HTTP_404_NOT_FOUND)
         else:
             try:
-                token=Token.objects.get(user=seller)
+                token=SellerToken.objects.get(user=seller)
             except:
-                token=Token.objects.create(user=seller)
+                token=SellerToken.objects.create(user=seller)
             return JsonResponse({'token':str(token)},status=status.HTTP_200_OK)
 
 
@@ -83,6 +84,7 @@ def sellerlogin(request):
 # You define the behavior of these methods by implementing their corresponding functions (get, post, put, delete, etc.) within your view class.
 class SellerRegistrationView(APIView):  #
     def post(self,request,format=None):
+        permission_classes=[AllowAny]
         serializer=SellerRegistrationSerializer(data=request.data) #data comes in request.data, serializer will have two things that we can use serializer.data and serializer.errors
 
         if serializer.is_valid(raise_exception=True): #raise_exception=True: This ensures that if the serializer encounters any validation errors while processing the input data (such as missing required fields or invalid formats), a validation exception will be raised, and the view will return a 400 Bad Request response with the validation errors.      helps in a way that it will return a proper response than saying an error occurred

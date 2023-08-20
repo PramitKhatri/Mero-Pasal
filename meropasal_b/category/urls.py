@@ -3,5 +3,5 @@ from .views import AddCategoryView
 
 
 urlpatterns=[
-    path('addCategory/',AddCategoryView.as_view(),name='addCategory' ) 
+    path('Category/',AddCategoryView.as_view(),name='addCategory' ) 
 ]

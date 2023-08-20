@@ -10,7 +10,7 @@ class ProductView(APIView):
 
     def get(self,request,format=None):
         product=Product.objects.all()
-        serializer-ProductSerializer(product)
+        serializer=ProductSerializer(product)
         return JsonResponse(serializer.data)
 
     def post(self,request,format=None):
