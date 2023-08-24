@@ -14,6 +14,7 @@ import SellerHomepage from "./pages/SellerHomepage";
 import Unauthorized from "./pages/Unauthorized";
 import Lounge from "./pages/Lounge";
 import AddCategory from "./pages/Admin/AddCategory";
+import AddProduct from "./pages/Seller/AddProduct"
 
 
 function App() {
@@ -39,6 +40,8 @@ function App() {
 
           <Route element={<RequireAuth allowedRoles={['seller']}/>}>
             <Route path="seller" element={<SellerHomepage />} />
+            <Route path="AddProduct" element={<AddProduct />} />
+            
           </Route>
 
           <Route element={<RequireAuth allowedRoles={['admin','seller']} />}>

@@ -47,5 +47,3 @@ class Seller(AbstractBaseUser,PermissionsMixin):
     def __str__(self):
         return self.email
 
-class SellerToken(Token):
-    seller = models.OneToOneField(Seller, on_delete=models.CASCADE, related_name='auth_token')  #seller not User

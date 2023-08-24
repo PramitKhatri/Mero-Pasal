@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import Seller,SellerToken
+from .models import Seller
 
 class SellerAdmin(admin.ModelAdmin):
     list_display=('id', 'email', 'first_name', 'last_name', 'company_name','seller_desc','seller_image','seller_verification','status', 'is_active', 'is_staff',) #what you want to display in admin

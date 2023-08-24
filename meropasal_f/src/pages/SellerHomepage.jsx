@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 const SellerHomepage = () => {
   const [sellerdata,setSellerdata]=useState({})
@@ -19,7 +20,8 @@ const SellerHomepage = () => {
   return (
     <>
       <h1>seller email={seller.user.email}</h1>
-      <img src={sellerdata.seller_image} alt="nope" height='100px'/>
+      <img src={sellerdata.seller_image} alt="nope" height='100px'/> <br />
+      <Link className="button" to="/AddProduct">Add Product</Link>
     </>
   )
 }

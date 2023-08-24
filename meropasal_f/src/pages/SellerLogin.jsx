@@ -18,9 +18,9 @@ const SellerLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response=await axios.post('http://localhost:8000/slogin/',JSON.stringify({email,password}),{headers:{"Content-Type":"application/json"}})  //the front email is from db and back is from this app
+      const response=await axios.post('http://localhost:8000/sellerlogin/',JSON.stringify({email,password}),{headers:{"Content-Type":"application/json"}})  //the front email is from db and back is from this app
       console.log(JSON.stringify(response.data))
-      localStorage.setItem('user',JSON.stringify(response.data)|| [])
+      localStorage.setItem("user",JSON.stringify(response.data)|| [])
 
 
       setEmail('')

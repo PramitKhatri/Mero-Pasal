@@ -97,12 +97,12 @@ const SellerRegister = () => {
 
                 console.log(formData)
 
-                const response = await axios.post('http://localhost:8000/sregister/', formData, {
+                const response = await axios.post('http://localhost:8000/sellerregister/', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'  //Set the appropriate content type for form data since the data also has files else it would be application/json
                     }
                 })
-                localStorage.setItem('user', JSON.stringify(response.data) || [])
+                localStorage.setItem("user", JSON.stringify(response.data) || [])
                 toast.success('Registration Successful')
                 setEmail('')
                 setpassword('')

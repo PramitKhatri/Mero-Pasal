@@ -14,6 +14,7 @@ class ProductView(APIView):
         return JsonResponse(serializer.data)
 
     def post(self,request,format=None):
+        print(request.data)
         permission_classes=[IsAuthenticated]
         serializer=ProductSerializer(data=request.data)
 
