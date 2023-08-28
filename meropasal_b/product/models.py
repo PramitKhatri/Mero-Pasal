@@ -9,6 +9,7 @@ class Product(models.Model):
     seller=models.ForeignKey(Seller,on_delete=models.CASCADE)
     category=models.ForeignKey(Category,on_delete=models.SET_DEFAULT,default='category_not_found')
     description=models.TextField()
+    # price=models.DecimalField(max_digits=6 decimal_places=2)
     price=models.FloatField()
     stock=models.IntegerField(default=100)
     product_image=models.FileField(upload_to='products',null=True)

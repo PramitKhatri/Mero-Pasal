@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RequireAuth from "./hooks/RequireAuth";
 
-
 import Layouts from "./pages/Layouts";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
@@ -15,6 +14,10 @@ import Unauthorized from "./pages/Unauthorized";
 import Lounge from "./pages/Lounge";
 import AddCategory from "./pages/Admin/AddCategory";
 import AddProduct from "./pages/Seller/AddProduct"
+
+
+
+
 
 
 function App() {

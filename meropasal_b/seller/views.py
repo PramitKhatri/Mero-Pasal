@@ -176,8 +176,8 @@ class SellerLoginView(APIView):
 
         return JsonResponse(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-class SellerViewSet(viewsets.ModelViewSet):
+class SellerViewSet(viewsets.ModelViewSet):  #this 4 line of code can handle all request of get, post, put , patch and delete. quite amazing
     queryset=Seller.objects.all()
     serializer_class=SellerSerializer
-    parser_classes=(MultiPartParser,FormParser)
+    parser_classes=(MultiPartParser,FormParser) #parser_classes attribute is set to (MultiPartParser, FormParser). This means that this ViewSet is configured to handle both multipart/form-data and application/x-www-form-urlencoded content types.
     permission_classes=[permissions.IsAuthenticatedOrReadOnly]
