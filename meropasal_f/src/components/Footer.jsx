@@ -3,7 +3,6 @@ import footerlogo from "../images/footerlogo.png"
 
 const Footer = () => {
   return (
-    <div className='bg-slate-900 absolute bottom-0 right-0 left-0'>
       <footer>
         <div className="footer-left">
           <img src={footerlogo} alt="" />
@@ -26,7 +25,6 @@ const Footer = () => {
           </form>
         </div>
       </footer>
-    </div>
   )
 }
 

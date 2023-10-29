@@ -11,9 +11,9 @@ const Login = () => {
     // const { setAuthentication } = useContext(AuthContext)
     // const {setAuthentication}=useAuth()
 
-    const navigate=useNavigate()
-    const location=useLocation()
-    const from=location.state?.from?.pathname || '/'
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || '/'
 
 
     const [email, setEmail] = useState('')
@@ -29,22 +29,24 @@ const Login = () => {
         e.preventDefault()
         console.log(`${email}`, `${password}`)
         try {
-            const response = await axios.post(`http://localhost:8000/login/`, JSON.stringify({ email, password }),{headers:{"Content-Type":"application/json"}})
+            const response = await axios.post(`http://localhost:8000/login/`, JSON.stringify({ email, password }), { headers: { "Content-Type": "application/json" } })
             console.log(JSON.stringify(response.data))
-            localStorage.setItem('user',JSON.stringify(response.data) || [])
-            
+            localStorage.setItem('user', JSON.stringify(response.data) || [])
+
             setEmail('')
             setPassword('')
             toast.success('login works')
             setIsloggedin(true)
-            navigate(from,{replace:true})
+            navigate(from, { replace: true })
+            window.location.reload()  //this reloads the page to show changes.
+
         }
         catch (err) {
-            if(!err?.response){
+            if (!err?.response) {
                 SetErrMsg('no server response')
-            }else if (err.response?.status===400){
+            } else if (err.response?.status === 400) {
                 SetErrMsg('missing username or password')
-            }else{
+            } else {
                 SetErrMsg('Login failed')
             }
             toast.error(err.response?.data?.error)
