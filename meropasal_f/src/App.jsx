@@ -14,6 +14,8 @@ import Unauthorized from "./pages/Unauthorized";
 import Lounge from "./pages/Lounge";
 import AddCategory from "./pages/Admin/AddCategory";
 import AddProduct from "./pages/Seller/AddProduct"
+import ProductDetails from "./components/ProductDetails";
+import Cart from "./components/Cart";
 
 
 
@@ -29,6 +31,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path="signup" element={<Signup />} />
             <Route path='login' element={<Login />} />
+            <Route path="productdetails/:productid" element={<ProductDetails/>}/>
+            <Route path="cart" element={<Cart/>}/>
           </Route>
 
           <Route path="sellerregister" element={<SellerRegister />} />

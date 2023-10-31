@@ -16,7 +16,7 @@ const Header = () => {
         <li><a href="/">Home</a></li>
         <li><a href="#">Shop all</a></li>
         <li><a href="#">New arrivals</a></li>
-        <li><a href="#">Cart</a></li>
+        <li><a href="/cart">Cart</a></li>
       </ul>
 
       <div className="nav-right">

@@ -4,21 +4,30 @@
 @import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Quicksand:wght@400;500;600&family=Wavefont&display=swap');
 :root{
     --primary: #E7E9EC;
+    --primarygrey:#CED1D6;
+    --primarydark:#94989E;
     --accent: #D10024;
+    --accentdim: #CF2E49;
+    --accent2nd:#e53e5a;
     --black:#000000;
     --white:#ffff;
-    --fontnormal:20px;
-    --fontsmall:18px;
-    --fontbig:20px;
+    --fontnormal:1.3rem;
+    --fontsmall:1rem;
+    --fontbig:1.6rem;
+    --fonthuge:1.9rem;
+    --fonttiny:0.7rem;
 }
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'quicksand',sans-serif;
+    letter-spacing: 0.07rem;
 }
 
 img {
+    height: 100%;
+    width: 100%;
     object-fit: contain;
 }
 .hover:hover{
@@ -29,8 +38,8 @@ img {
 /* navbaar start */
 
 nav {
-    width: 100%;
-    height: 80px;
+    /* width: 100%; */
+    /* height: 80px; */
     display: flex;
     align-items: center;
     background-color: var(--primary);
@@ -69,6 +78,7 @@ nav ul li:hover{
 .search input{
     height: 40px;
     margin-right: 3px;
+    width: 12rem;
 }
 .search input:focus{
     border: none;
@@ -108,30 +118,170 @@ textarea:focus {
 
 /* ==================CARD SECTION START========================= */
 .card{
-    height: 15em;
-    width: 8em;
+    height: 22rem;
+    width: 19.5rem;
     display: inline-flex;
     flex-wrap: wrap;
     margin: 10px;
-    box-shadow: 0 0 35px rgba(0,0,0,0.7);
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
     padding: 10px;
+    border-radius: 10px;
 }
 
 .card .card-image{
     width: 98%;
     height: 60%;
+    /* object-fit: fill; */
 
+}
+.card .card-button{
+    background-color: var(--accentdim);
+    color: var(--white);
+    padding: 0.6rem;
+    border-radius: 0.2rem;
 }
 
 
 
 /* ==================CARD SECTION END=========================== */
 
+/* ==================Product Details section start================= */
+
+.product-details{
+    display: flex;
+    padding: 2.5rem;
+
+}
+
+.product-details .product-image{
+    /* max-height: 30rem; */
+    width: 60%;
+}
+
+.product-details .product-desc{
+    width: 40%;
+    /* min-height: 30rem; */
+    position: relative;
+    background-color: var(--primary);   
+    font-size: var(--fontnormal); 
+}
+
+.product-details .product-desc .product-name{
+    font-size: var(--fonthuge);
+    font-weight: bold;
+}
+.product-seller{
+    display: flex;
+    align-items: center;
+    font-size: var(--fonttiny);
+}
+.product-seller img{
+    /* height: 25px; */
+    width: 25px;
+    border-radius: 50%;
+}
+
+.product-price,.product-rating{
+    width: 50%;
+    font-size: var(--fontbig);
+    color: var(--accent);
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.product-category{
+    font-size: var(--fontsmall);
+    padding: 1rem 0;
+}
+
+.product-quantity button,input{
+    width: 3rem;
+}
+
+.product-addtocart,.product-order{
+    width: 50%;
+    padding: 1rem 2rem;
+    position: relative;
+    bottom: 0;
+}
+.product-details .product-addtocart{
+    color: var(--primary);
+    left: 0;
+    background-color:var(--accent2nd);
+}
+
+.product-details .product-order{
+    color: var(--primary);
+    background-color: var(--primarydark);
+    right: 0;
+}
+
+/* ==================Product Details section end=================== */
+
+/* ==================Start of Cart section========================= */
+
+.cart-container{
+    display: flex;
+}
+
+.cart-empty{
+    position: relative;
+    left: 50%;
+    padding: 10rem 0;
+    font-size: var(--fontbig);
+    font-weight: bold;
+}
+
+.cart-items{
+    display: flex;
+    padding: 2rem;
+    align-items: center;
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    margin: 0.5rem ;
+    border-radius: 0.5rem;
+}
+
+.cart-items img{
+    width: 10rem;
+    border-radius: 0.5rem;
+}
+
+.cart-items p{
+    font-size: var(--fontnormal);
+    margin: 2rem;
+}
+.cart-items .cart-decrease,.cart-increase,.cart-quantity,.cart-delete{
+    width: 4.5rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin: 0 0.4rem;
+}
+
+.cart-result{
+    background-color: var(--primarygrey);
+    padding: 2rem 5rem;
+    width: 33%;
+    font-size: var(--fontnormal);
+    font-weight: bold;
+}
+.cart-result p{
+    margin: 2rem 0;
+}
+
+.cart-result button{
+    padding: 1rem;
+    width: 100%;
+    background-color: var(--accent);
+    color: var(--primarygrey);
+    border-radius: 0.5rem;
+}
+
+/* ==================End of Cart section=========================== */
 /* Footer section start */
 footer{
-    width: 100%;
+    /* width: 100%; */
     /* height: 200px; */
-    margin: auto;
+    /* margin: auto; */
     display: flex;
     color: var(--primary);
     font-size: var(--fontsmall);

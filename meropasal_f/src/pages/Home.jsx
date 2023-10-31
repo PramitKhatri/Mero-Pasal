@@ -8,6 +8,7 @@ const Home = () => {
   const [products, SetProduct] = useState([])
   // console.log(localStorage.getItem('user'))
   console.log(products)
+  console.log(products.id)
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/productview/')
