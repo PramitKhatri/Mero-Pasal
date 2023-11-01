@@ -33,5 +33,6 @@ urlpatterns = [
     path('',include('category.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('',include('userorders.urls')),
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)  #this handles the user file inputs and puts in the media file since even if the django gets the file it doesnot know what to do with it

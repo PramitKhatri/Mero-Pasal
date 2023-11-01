@@ -7,6 +7,9 @@ from seller.models import Seller
 class PaymentMethod(models.Model):
     paymentmethod=models.CharField(max_length=200, default='Cash on Delivery')
 
+    def __str__(self):
+        return self.paymentmethod
+
 
 
 class Order(models.Model):
@@ -19,4 +22,7 @@ class Order(models.Model):
     paymentstatus=models.BooleanField(default=False)
     deliverystatus=models.BooleanField(default=False)
     date=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
 
