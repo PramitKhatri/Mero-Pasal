@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Quicksand:wght@400;500;600&family=Wavefont&display=swap');
 :root{
     --primary: #E7E9EC;
-    --primarygrey:#CED1D6;
+    --primarygrey:#ced1d6;
     --primarydark:#94989E;
     --accent: #D10024;
     --accentdim: #CF2E49;
@@ -277,6 +277,17 @@ textarea:focus {
 }
 
 /* ==================End of Cart section=========================== */
+
+/* ====================Order Page Start================================== */
+
+.order{
+    position: absolute;
+    /* display: none; */
+    background-color: rgba(206, 209, 214,0.9);
+    inset: 0;
+}
+
+/* ====================Order Page End =================================== */
 /* Footer section start */
 footer{
     /* width: 100%; */

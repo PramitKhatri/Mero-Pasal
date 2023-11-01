@@ -1,13 +1,16 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
+import OrderPage from '../pages/User/OrderPage'
 
 const ProductDetails = () => {
     const [product, setProduct] = useState({})
     const [seller, setSeller] = useState({})
     const [quantity, setQuantity] = useState(1)
+
     const params = useParams()
+    const navigate=useNavigate()
     console.log(product)
     // console.log(seller)
     console.log(quantity)
@@ -61,6 +64,12 @@ const ProductDetails = () => {
     }
 
 
+    const OrderNow=()=>{
+        
+
+    }
+
+
     return (
         <>
             <ToastContainer theme='colored' position='top-center' />
@@ -86,9 +95,10 @@ const ProductDetails = () => {
                         </div>
                     </div>
                     <button className='product-addtocart' onClick={AddtoCart}>Add to Cart</button>
-                    <button className='product-order'>Order Now</button>
+                    <button className='product-order' onClick={OrderNow}>Order Now</button>
                 </div>
             </div>
+            <OrderPage data={{product:product,quantity:quantity,seller:seller,price:(product.price*quantity)}} />
         </>
     )
 }

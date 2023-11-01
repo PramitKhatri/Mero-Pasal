@@ -16,6 +16,7 @@ import AddCategory from "./pages/Admin/AddCategory";
 import AddProduct from "./pages/Seller/AddProduct"
 import ProductDetails from "./components/ProductDetails";
 import Cart from "./components/Cart";
+import OrderPage from "./pages/User/OrderPage";
 
 
 
@@ -31,8 +32,11 @@ function App() {
             <Route index element={<Home />} />
             <Route path="signup" element={<Signup />} />
             <Route path='login' element={<Login />} />
-            <Route path="productdetails/:productid" element={<ProductDetails/>}/>
-            <Route path="cart" element={<Cart/>}/>
+            <Route path="productdetails/:productid" element={<ProductDetails />} />
+
+            {/* <Route element={<RequireAuth allowedRoles={['admin','seller','user']} />}> */}
+              <Route path="cart" element={<Cart />} />
+            {/* </Route> */}
           </Route>
 
           <Route path="sellerregister" element={<SellerRegister />} />
@@ -40,18 +44,18 @@ function App() {
 
           {/* the below ones are protected routes which will check the roles that are given from the backend */}
           {/* <Route element={<RequireAuth allowedRoles={['admin']}/>}> */}
-          <Route element={<RequireAuth allowedRoles={['admin']}/>}>
+          <Route element={<RequireAuth allowedRoles={['admin']} />}>
             <Route path='admin' element={<Admin />} />
             <Route path='AddCategory' element={<AddCategory />} />
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={['seller']}/>}>
+          <Route element={<RequireAuth allowedRoles={['seller']} />}>
             <Route path="seller" element={<SellerHomepage />} />
             <Route path="AddProduct" element={<AddProduct />} />
-            
+
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={['admin','seller']} />}>
+          <Route element={<RequireAuth allowedRoles={['admin', 'seller']} />}>
             <Route path='lounge' element={<Lounge />} />  {/* lounge can be accessed both by admins and sellers */}
           </Route>
 
