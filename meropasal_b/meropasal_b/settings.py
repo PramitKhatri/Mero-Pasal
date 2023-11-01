@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'seller',
     'category',
     'product',
+    'userorders',
 
 
 ]
