@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import OrderPage from '../pages/User/OrderPage'
 
@@ -9,14 +9,19 @@ const ProductDetails = () => {
     const [seller, setSeller] = useState({})
     const [quantity, setQuantity] = useState(1)
 
+
+    //for this to work with cart as well which has multiple products with different quantity, i need to insert the quantity inside product object so that it would mimic the behaviour from the MyCart in local storage, so
+    
+
+    const [orderclicked,setOrderClicked]=useState(false)
+
     const params = useParams()
-    const navigate=useNavigate()
-    console.log(product)
+    // console.log(product)
     // console.log(seller)
-    console.log(quantity)
-    if (typeof product === 'object') {
-        console.log('product is an object');
-    }
+    // console.log(quantity)
+    // if (typeof product === 'object') {
+    //     console.log('product is an object');
+    // }
     useEffect(() => {
         const productid = params.productid
         axios.get(`http://localhost:8000/api/productview/${productid}/`)
@@ -65,8 +70,9 @@ const ProductDetails = () => {
 
 
     const OrderNow=()=>{
-        
-
+        product.quantity=quantity
+        window.scrollTo({top:0,behavior:'smooth'})
+        setOrderClicked(true)
     }
 
 
@@ -98,7 +104,13 @@ const ProductDetails = () => {
                     <button className='product-order' onClick={OrderNow}>Order Now</button>
                 </div>
             </div>
-            <OrderPage data={{product:product,quantity:quantity,seller:seller,price:(product.price*quantity)}} />
+            {orderclicked &&
+            <div className='order'>
+                <button onClick={()=>setOrderClicked(false)}>Cancel</button>
+            <OrderPage data={{product:product,price:(product.price*quantity)}} />
+            </div>
+            }
+            
         </>
     )
 }

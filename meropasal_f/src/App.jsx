@@ -17,6 +17,7 @@ import AddProduct from "./pages/Seller/AddProduct"
 import ProductDetails from "./components/ProductDetails";
 import Cart from "./components/Cart";
 import OrderPage from "./pages/User/OrderPage";
+import MyOrders from "./pages/User/MyOrders";
 
 
 
@@ -34,9 +35,10 @@ function App() {
             <Route path='login' element={<Login />} />
             <Route path="productdetails/:productid" element={<ProductDetails />} />
 
-            {/* <Route element={<RequireAuth allowedRoles={['admin','seller','user']} />}> */}
+            <Route element={<RequireAuth allowedRoles={['admin','seller','user']} />}>
               <Route path="cart" element={<Cart />} />
-            {/* </Route> */}
+              <Route path="myorders" element={<MyOrders/>}/>
+            </Route>
           </Route>
 
           <Route path="sellerregister" element={<SellerRegister />} />

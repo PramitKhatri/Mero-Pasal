@@ -16,7 +16,9 @@ const Header = () => {
         <li><a href="/">Home</a></li>
         <li><a href="#">Shop all</a></li>
         <li><a href="#">New arrivals</a></li>
-        <li><a href="/cart">Cart</a></li>
+        
+        <li><a href={user?'/cart':'/login'}>Cart</a></li>
+        <li><a href={user?'/myorders':'/login'}>MyOrders</a></li>
       </ul>
 
       <div className="nav-right">
