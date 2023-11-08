@@ -55,7 +55,7 @@ def SellerProductView(request,sellerid):
 
 
 
-# this view doesn't work.
+
 class ProductView(APIView):
 
     #i dont need get no more. since it keeps giving me 401 error. we gonna use viewsets

@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from .models import Product
-from seller.models import Seller
+from django.contrib.auth.models import User
+
 from category.models import Category
 from django.conf import settings
 
 class ProductSerializer(serializers.ModelSerializer):
-    seller=serializers.PrimaryKeyRelatedField(queryset=Seller.objects.all()) #PrimaryKeyRelatedField may be used to represent the target of the relationship using its primary key.
     category=serializers.SlugRelatedField(slug_field='category', queryset=Category.objects.all())   #This setup allows you to pass the category name as a string when creating a new product. The serializer will use the provided string to look up the corresponding Category instance based on the unique category field.
     product_image_url = serializers.SerializerMethodField()  # Add this field
 

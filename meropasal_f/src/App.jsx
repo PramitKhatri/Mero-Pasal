@@ -6,8 +6,7 @@ import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Notfound from "./pages/Notfound";
 import Login from "./pages/Login";
-import SellerRegister from "./pages/SellerRegister";
-import SellerLogin from "./pages/SellerLogin";
+
 import Admin from "./pages/Admin";
 import SellerHomepage from "./pages/Seller/SellerHomepage";
 import Unauthorized from "./pages/Unauthorized";
@@ -42,8 +41,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="sellerregister" element={<SellerRegister />} />
-          <Route path="sellerlogin" element={<SellerLogin />} />
+
 
           {/* the below ones are protected routes which will check the roles that are given from the backend */}
           {/* <Route element={<RequireAuth allowedRoles={['admin']}/>}> */}

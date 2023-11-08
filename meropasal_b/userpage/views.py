@@ -27,7 +27,8 @@ def signup(request):
                 email=data['email'],
                 password=data['password'],
                 first_name=data['first_name'],
-                last_name=data['last_name']
+                last_name=data['last_name'],
+                is_staff=data.get('is_staff', False)
             )
             user.save()
             token = Token.objects.create(user=user)
@@ -35,6 +36,8 @@ def signup(request):
             def roles(user):
                 if user.is_superuser==True:
                     role='admin'
+                elif user.is_staff==True:
+                    role='seller'
                 else:
                     role='user' 
                 return role
@@ -77,6 +80,8 @@ def login(request):
             def roles(user):
                 if user.is_superuser==True:
                     role='admin'
+                elif user.is_staff==True:
+                    role='seller'
                 else:
                     role='user' 
                 return role

@@ -9,6 +9,7 @@ const Signup = () => {
     const [last_name, setLastname] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [is_staff,setStaff]=useState(false)
     const [formErrors, setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false)   //this states of the user submitted or not and is useful for navigate
 
@@ -43,7 +44,7 @@ const Signup = () => {
         setFormErrors(errors)    //this takes the errors object from abiove and pushes it to usestate()
         if (Object.keys(errors).length === 0) {
             try {
-                const response = await axios.post('http://localhost:8000/signup/', { first_name, last_name, email, password })
+                const response = await axios.post('http://localhost:8000/signup/', { first_name, last_name, email, password, is_staff})
                 toast.success('Registration Successful')
                 console.log(FormData)
                 localStorage.setItem('user', JSON.stringify(response.data) || [])
@@ -51,7 +52,9 @@ const Signup = () => {
                 setLastname('')
                 setEmail('')
                 setPassword('')
+                setStaff(false)
                 setIsSubmit(true)
+                window.location.reload()
             } catch (err) {
                 toast.error(err.response.data.error)
             }
@@ -142,6 +145,16 @@ const Signup = () => {
                                 {formErrors.password && (
                                     <p className="text-red-500">{formErrors.password}</p>
                                 )}
+                            </div>
+                            <div className='mb-2'>
+                                <input 
+                                type="checkbox"  
+                                id="seller"
+                                className='form-input border-4 h-5 mt-3'
+                                onChange={(event)=>setStaff(event.target.checked)}
+                                checked={is_staff}
+                                 />
+                                <label htmlFor="seller">I want to be a seller.</label>
                             </div>
                             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-4">Signup</button>
                         </form>
