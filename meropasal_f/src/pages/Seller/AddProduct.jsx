@@ -70,6 +70,7 @@ const AddProduct = () => {
                 SetStock(0)
                 SetProductImage(null)
                 console.log(response.data)
+                window.location.reload() //for some reason it was sending empty object for seller, this seems to have fixed it. I don't know why I did this and how its fixing the issue lol.
 
             } catch (err) {
                 console.log(err)
