@@ -53,7 +53,7 @@ REST_FRAMEWORK={
         
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated',
     ]
     
     # When In production, the below should be uncommented. What it does is make your api views in your browser to only show json data and not allow the get, post , add methods directly to your serializer
