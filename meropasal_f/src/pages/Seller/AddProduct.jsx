@@ -16,7 +16,7 @@ const AddProduct = () => {
     const [stock, SetStock] = useState(0)
     const [product_image, SetProductImage] = useState(null)
 
-    // console.log(sellerdata.token.access)
+    console.log(sellerdata)
 
     useEffect(() => {
         if (!categories) {  //checks if there are categories and if not then only sends a request to server
@@ -56,10 +56,10 @@ const AddProduct = () => {
                 formdata.append('stock', stock)
                 formdata.append('product_image', product_image)
 
-                const response = await axios.post('http://localhost:8000/product/', formdata, {
+                const response = await axios.post(`http://localhost:8000/product/${sellerdata.user.id}/`, formdata, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${sellerdata.token.access}`
+                        // 'Authorization': `Bearer ${sellerdata.token.access}`
                     }
                 })
                 SetProductName('')
@@ -84,7 +84,7 @@ const AddProduct = () => {
         <>
             <div>
                 <p>{error}</p>
-                <form onSubmit={SubmitHandler}>
+                <form onSubmit={SubmitHandler} className="form">
                     <div>
                         <label htmlFor="name">Product Name</label>
                         <input type="text" id="name" value={product_name} onChange={e => SetProductName(e.target.value)} required />
@@ -123,7 +123,7 @@ const AddProduct = () => {
                         <label htmlFor="image">Product Image</label>
                         <input type="file" id="image" onChange={e => SetProductImage(e.target.files[0])} required />
                     </div>
-                    <button>Add Product</button>
+                    <button className="flex-shrink-0  bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded">Add Product</button>
                 </form>
             </div>
 

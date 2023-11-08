@@ -16,7 +16,7 @@ const RequireAuth = (props) => {  //allowedRoles is a prop that comes from Route
             : userData?.token //this will check if the routes are not allowed for that user but the user is looged in then we send them to unauthorized
                 ? <Navigate to='/unauthorized' state={{ from: location }} replace />
                 //if there is no user logged in then go to login
-                : <Navigate to='/login' state={{ from: location }} replace />  //to remember where the user came from and redirect them to login. if they try to go back we need from and replace for it to work
+                : <Navigate to='/' state={{ from: location }} replace />  //to remember where the user came from and redirect them to login. if they try to go back we need from and replace for it to work
 
     )
 }

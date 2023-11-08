@@ -17,6 +17,10 @@ authenticate_seller=SellerAuthenticator()  #creating a instance for the class to
 
 from rest_framework.exceptions import ParseError
 
+from product.models import Product
+from product.serializers import ProductSerializer
+
+
 
 
 # Create your views here.
@@ -181,3 +185,12 @@ class SellerViewSet(viewsets.ModelViewSet):  #this 4 line of code can handle all
     serializer_class=SellerSerializer
     parser_classes=(MultiPartParser,FormParser) #parser_classes attribute is set to (MultiPartParser, FormParser). This means that this ViewSet is configured to handle both multipart/form-data and application/x-www-form-urlencoded content types.
     permission_classes=[permissions.IsAuthenticatedOrReadOnly]
+
+
+class SellerProductView(APIView):
+    permission_classes=[permissions.IsAuthenticated]
+    def get(self,request,sellerid,format=None):
+        product=Product.objects.filter(seller_id=sellerid)
+        serializer=ProductSerializer(product,many=True)
+        print(request)
+        return Response(serializer.data)

@@ -35,6 +35,26 @@ img {
     opacity: 0.8;
 }
 
+input {
+    border: 1px solid black;
+    margin: 1px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+select {
+    padding: 5px;
+    border: 2px solid grey;
+}
+
+
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: rgb(0, 41, 135);
+}
+
 /* navbaar start */
 
 nav {
@@ -95,26 +115,23 @@ nav ul li:hover{
 
 
 /* navbar stop */
+/* +===============seller register start================== */
 
-input {
-    border: 1px solid black;
-    margin: 1px;
-    padding: 5px;
-    border-radius: 5px;
+.form{
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    width: 60%;
+    margin: auto;
+    padding: 2rem;
+    background-color: var(--primary);
 }
 
-select {
-    padding: 5px;
-    border: 2px solid grey;
+.form input{
+    width: 10rem ;
+    margin: 0 2rem;
 }
 
 
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: rgb(0, 41, 135);
-}
+/* +===============seller register end================== */
 
 /* ==================CARD SECTION START========================= */
 .card{

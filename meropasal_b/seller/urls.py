@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import *
+from seller.views import *
 from rest_framework.routers import DefaultRouter
 
 router=DefaultRouter()  #this is done since i am using ModelViewSet in views and not generics
@@ -11,5 +11,7 @@ urlpatterns=[
     path('api/',include(router.urls)),  #The router will generate the following URLs for the SellerViewSet:       /api/seller/: List and create view           /api/seller/{pk}/: Retrieve, update, and delete view for individual sellers
     path('sregister/',SellerRegistrationView.as_view(),name='sregister'),
     path('slogin/',SellerLoginView.as_view(),name='slogin'),
+    path('api/sellerproduct/<int:sellerid>/',SellerProductView.as_view(),name='getproducts'),
+    
     
 ]

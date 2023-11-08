@@ -139,10 +139,10 @@ const SellerRegister = () => {
         <>
             <section>
                 <ToastContainer theme="colored" position="top-right" />
-                <form onSubmit={sellersubmit} encType="multipart/form-data">
+                <form onSubmit={sellersubmit} encType="multipart/form-data" className="form">
                     <div >
-                        <div >
-                            <div >
+                        <div>
+                            <div className="block mb-5">
                                 <label htmlFor="email">Email:</label>
                                 <input id="email" type="email" onChange={(e) => setEmail(e.target.value)} value={email} autoComplete="off" className="" />
                                 {formErrors.email && (

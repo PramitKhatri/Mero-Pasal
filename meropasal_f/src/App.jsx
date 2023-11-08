@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import SellerRegister from "./pages/SellerRegister";
 import SellerLogin from "./pages/SellerLogin";
 import Admin from "./pages/Admin";
-import SellerHomepage from "./pages/SellerHomepage";
+import SellerHomepage from "./pages/Seller/SellerHomepage";
 import Unauthorized from "./pages/Unauthorized";
 import Lounge from "./pages/Lounge";
 import AddCategory from "./pages/Admin/AddCategory";
@@ -18,6 +18,7 @@ import ProductDetails from "./components/ProductDetails";
 import Cart from "./components/Cart";
 import OrderPage from "./pages/User/OrderPage";
 import MyOrders from "./pages/User/MyOrders";
+import SellerLayout from "./pages/Seller/SellerLayout";
 
 
 
@@ -35,9 +36,9 @@ function App() {
             <Route path='login' element={<Login />} />
             <Route path="productdetails/:productid" element={<ProductDetails />} />
 
-            <Route element={<RequireAuth allowedRoles={['admin','seller','user']} />}>
+            <Route element={<RequireAuth allowedRoles={['admin', 'seller', 'user']} />}>
               <Route path="cart" element={<Cart />} />
-              <Route path="myorders" element={<MyOrders/>}/>
+              <Route path="myorders" element={<MyOrders />} />
             </Route>
           </Route>
 
@@ -52,8 +53,10 @@ function App() {
           </Route>
 
           <Route element={<RequireAuth allowedRoles={['seller']} />}>
-            <Route path="seller" element={<SellerHomepage />} />
-            <Route path="AddProduct" element={<AddProduct />} />
+            <Route path="/seller" element={<SellerLayout />}>
+              <Route index element={<SellerHomepage />} />
+              <Route path="AddProduct" element={<AddProduct />} />
+            </Route>
 
           </Route>
 

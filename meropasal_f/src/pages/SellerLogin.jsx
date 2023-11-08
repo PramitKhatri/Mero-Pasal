@@ -43,7 +43,7 @@ const SellerLogin = () => {
 
   useEffect(() => {
     if (success) {
-      navigate('/')
+      navigate('/seller')
     }
   },[success,navigate])
 
@@ -54,14 +54,14 @@ const SellerLogin = () => {
         <p>{errMsg}</p>
 
         <h1>Sign In</h1>
-        <form onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit} className="form" >
           <label htmlFor="email" >Email:</label>
           <input type="email" id="email" autoComplete="off" onChange={(e) => setEmail(e.target.value)} value={email} required /> <br />
 
           <label htmlFor="pwd">Password:</label>
           <input type="password" id="pwd" onChange={(e) => setPassword(e.target.value)} value={password} /> <br />
 
-          <button>Sign In</button> {/* you dont have to say type=submit since thsi is the only button in form */}
+          <button className="flex-shrink-0  bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded">Sign In</button> {/* you dont have to say type=submit since thsi is the only button in form */}
         </form><br />
         <p>Don't have an account? <span><a href="/sellerregister">SignUp</a></span></p>
 
