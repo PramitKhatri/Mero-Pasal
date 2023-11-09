@@ -29,8 +29,8 @@ const SellerHomepage = () => {
   }, [seller.user.id, seller.token])
 
 
-  const EditProduct=(id)=>{
-    navigate(`/seller/${id}`)
+  const UpdateProduct=(id)=>{
+    navigate(`/seller/update/${id}`)
   }
 
   
@@ -56,8 +56,8 @@ const SellerHomepage = () => {
         <div key={index} className="sellerhomepage-product">
           <img src={product.product_image} alt="" />
           <p>{product.product_name}</p>
-          <button className="bg-yellow-500 hover:bg-yellow-600" onClick={()=>navigate('/seller/productdata',{state:{id:product.id}})}>View details</button> //you can access the values in the state by using use location hook
-          <button className="bg-blue-300 hover:bg-blue-400" onClick={()=>EditProduct(product.id)}>Edit</button>
+          <button className="bg-yellow-500 hover:bg-yellow-600" onClick={()=>navigate('/seller/productdata',{state:{id:product.id}})}>View details</button> {/*you can access the values in the state by using use location hook */}
+          <button className="bg-blue-300 hover:bg-blue-400" onClick={()=>UpdateProduct(product.id)}>Edit</button>
           <button className="bg-red-500 hover:bg-red-600" onClick={()=>DeleteProduct(product.id)}>Delete</button>
         </div>
       ))}

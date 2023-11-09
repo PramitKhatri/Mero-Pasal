@@ -17,7 +17,7 @@ const ProductData = () => {
   }, [location?.state?.id])
 
   const EditProduct=(id)=>{
-    navigate(`/seller/${id}`)
+    navigate(`/seller/update/${id}`)
   }
 
   const DeleteProduct = () => {
@@ -54,7 +54,7 @@ const ProductData = () => {
               <p className='product-rating'>this is rating</p>
             </div>
             <p className='product-description'>{product.description}</p>
-            <p className='product-category'>category:<a style={{ textDecoration: 'underline' }} className='hover:text-red-700'>{product.category}</a></p>
+            <p className='product-category'>category:<a href='' style={{ textDecoration: 'underline' }} className='hover:text-red-700'>{product.category}</a></p>
 
           </div>
           <button className='product-addtocart' onClick={()=>EditProduct(product.id)}>Edit</button>

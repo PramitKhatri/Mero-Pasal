@@ -57,7 +57,7 @@ function App() {
               <Route index element={<SellerHomepage />} />
               <Route path="productdata" element={<ProductData/>}/>
               <Route path="AddProduct" element={<AddProduct />} />
-              <Route path="Update" element={<UpdateProduct/>}/>
+              <Route path="Update/:id" element={<UpdateProduct/>}/>
             </Route>
 
           </Route>

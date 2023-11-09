@@ -78,8 +78,13 @@ class Productupdatedelete(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=ProductSerializer
     permission_classes=[permissions.IsAuthenticated]
 
-    def delete(self,request,*args,**kwargs):
-        product=Product.objects.filter(pk=kwargs['pk'])
+    def retrieve(self,request,*args,**kwargs):  #how this code should be written
+        product = self.get_object()            #gets product automatically by using the id given in url 
+        serializer = self.get_serializer(product)
+        return Response(serializer.data)
+
+    def delete(self,request,*args,**kwargs):  #how sir taught us to do
+        product=Product.objects.filter(pk=kwargs['pk'])  #gets product by explicitly setting the id
         if product.exists():
             self.destroy(request,*args,**kwargs)
             return Response(status=status.HTTP_204_NO_CONTENT)
