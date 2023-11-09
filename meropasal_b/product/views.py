@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated,AllowAny,IsAuthenticatedO
 from django.db import IntegrityError
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
-from rest_framework import viewsets,generics,status
+from rest_framework import viewsets,generics,status,permissions
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import permission_classes
@@ -58,13 +58,12 @@ def SellerProductView(request,sellerid):
 
 class ProductView(APIView):
 
-    #i dont need get no more. since it keeps giving me 401 error. we gonna use viewsets
-    def get(self,request,format=None):
-        products=Product.objects.all()
+    def get(self,request,sellerid,format=None):
+        products=Product.objects.filter(seller=sellerid)
         serializer=ProductSerializer(products,many=True,context={'request': request})
         return Response(serializer.data)
 
-    def post(self,request,format=None):
+    def post(self,request,sellerid,format=None):
         print(request.data)
         permission_classes=[IsAuthenticated]
         serializer=ProductSerializer(data=request.data)
@@ -73,3 +72,17 @@ class ProductView(APIView):
             serializer.save()
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class Productupdatedelete(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Product.objects.all()
+    serializer_class=ProductSerializer
+    permission_classes=[permissions.IsAuthenticated]
+
+    def delete(self,request,*args,**kwargs):
+        product=Product.objects.filter(pk=kwargs['pk'])
+        if product.exists():
+            self.destroy(request,*args,**kwargs)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        

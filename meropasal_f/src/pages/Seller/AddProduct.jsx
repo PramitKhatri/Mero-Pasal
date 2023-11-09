@@ -56,7 +56,7 @@ const AddProduct = () => {
                 formdata.append('stock', stock)
                 formdata.append('product_image', product_image)
 
-                const response = await axios.post(`http://localhost:8000/product/`, formdata, {
+                const response = await axios.post(`http://localhost:8000/product/${sellerdata.user.id}/`, formdata, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': `Token ${sellerdata.token}`

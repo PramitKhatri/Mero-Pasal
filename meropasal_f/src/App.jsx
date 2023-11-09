@@ -18,6 +18,8 @@ import Cart from "./components/Cart";
 import OrderPage from "./pages/User/OrderPage";
 import MyOrders from "./pages/User/MyOrders";
 import SellerLayout from "./pages/Seller/SellerLayout";
+import ProductData from "./pages/Seller/ProductData";
+import UpdateProduct from "./pages/Seller/UpdateProduct";
 
 
 
@@ -53,7 +55,9 @@ function App() {
           <Route element={<RequireAuth allowedRoles={['seller']} />}>
             <Route path="/seller" element={<SellerLayout />}>
               <Route index element={<SellerHomepage />} />
+              <Route path="productdata" element={<ProductData/>}/>
               <Route path="AddProduct" element={<AddProduct />} />
+              <Route path="Update" element={<UpdateProduct/>}/>
             </Route>
 
           </Route>

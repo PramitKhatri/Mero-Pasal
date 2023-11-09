@@ -358,6 +358,41 @@ nav ul li:hover{
 
 
 /* ====================Order Page End =================================== */
+
+/* ===========================Seller Homepage start====================== */
+
+.sellerhomepage{
+    font-size: var(--fonthuge);
+    color: var(--white);
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    background-color: var(--accentdim);
+    margin: 1rem 0;
+    padding: 0.5rem;
+}
+
+.sellerhomepage-product{
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.sellerhomepage-product img{
+    width: 15rem;
+    margin: 0 2rem;
+}
+.sellerhomepage-product button{
+    padding: 0.5rem 1.5rem;
+    margin: 2rem;
+    border-radius: 0.5rem;
+}
+
+/* ===========================Seller Homepage End======================== */
+
 /* Footer section start */
 footer{
     /* width: 100%; */
