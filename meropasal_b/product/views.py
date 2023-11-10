@@ -90,4 +90,14 @@ class Productupdatedelete(generics.RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def put(self,request,*args,**kwargs):
+        print(request.data)
+        product=self.get_object()
+        serializer = self.get_serializer(product,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':'product updated'},status=status.HTTP_202_ACCEPTED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
         
