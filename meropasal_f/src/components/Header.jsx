@@ -27,8 +27,8 @@ const Header = () => {
         </form>
         {user ?
         <div>
-        <a href='/profile'><FontAwesomeIcon className='icon' icon={faUser} size='xl' /></a>/
-        <button onClick={logout}>log-out</button>
+        <a href='/profile' className='hover:bg-slate-400'><FontAwesomeIcon className='icon' icon={faUser} size='xl' />Profile</a>/
+        <button className='hover:bg-slate-400' onClick={logout}>log-out</button>
         </div>
         :
         <div>

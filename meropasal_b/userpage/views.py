@@ -10,7 +10,7 @@ from rest_framework import status,generics
 user=get_user_model()
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny,IsAuthenticated
-from userpage.serializer import UserSerializer,ChangePasswordSerializer
+from userpage.serializer import UserSerializer,ChangePasswordSerializer,ResetEmailSerializer
 from rest_framework.response import Response
 
 
@@ -123,13 +123,42 @@ class UserProfileView(APIView):
 #         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
+class ChangePassword(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        user = request.user  # Assuming the user is authenticated
+        serializer = ChangePasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            new_password = serializer.validated_data['password']
+            user.set_password(new_password)
+            user.save()
+
+            return Response({'msg': 'Password changed'}, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class ResetPasswordEmail(APIView):
+    permission_classes=[AllowAny]
+    def post(self,request,format=None):
+        serializer=ResetEmailSerializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            return Response({'msg':'Check your email for password reset link'},status=status.HTTP_200_OK)
+
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+        """
 class ChangePassword(generics.UpdateAPIView):
     queryset=User.objects.all()
     serializer_class=ChangePasswordSerializer
     permission_classes=[IsAuthenticated]
 
     def patch(self,request,*args,**kwargs):
-        user=self.get_object()
+        user=self.get_object()  #this works if the user id is given in the url
         serializer=self.get_serializer(instance=user,data=request.data)
 
         if serializer.is_valid():
@@ -140,23 +169,3 @@ class ChangePassword(generics.UpdateAPIView):
 
 
         """ 
-class ChangePassword(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def patch(self, request, *args, **kwargs):
-        user = request.user  # Assuming the user is authenticated
-        serializer = ChangePasswordSerializer(data=request.data)
-
-        if serializer.is_valid():
-            new_password = serializer.validated_data['password']
-            
-            # Additional checks or validations can be performed here
-
-            # Change the user's password
-            user.set_password(new_password)
-            user.save()
-
-            return Response({'msg': 'Password changed'}, status=status.HTTP_200_OK)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        """
