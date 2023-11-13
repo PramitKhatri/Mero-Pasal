@@ -15,11 +15,11 @@ import AddCategory from "./pages/Admin/AddCategory";
 import AddProduct from "./pages/Seller/AddProduct"
 import ProductDetails from "./components/ProductDetails";
 import Cart from "./components/Cart";
-import OrderPage from "./pages/User/OrderPage";
 import MyOrders from "./pages/User/MyOrders";
 import SellerLayout from "./pages/Seller/SellerLayout";
 import ProductData from "./pages/Seller/ProductData";
 import UpdateProduct from "./pages/Seller/UpdateProduct";
+import Profile from "./pages/User/Profile";
 
 
 
@@ -40,6 +40,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={['admin', 'seller', 'user']} />}>
               <Route path="cart" element={<Cart />} />
               <Route path="myorders" element={<MyOrders />} />
+              <Route path='profile' element={<Profile/>}/>
             </Route>
           </Route>
 

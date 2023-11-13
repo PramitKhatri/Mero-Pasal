@@ -6,8 +6,13 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate,get_user_model
-from rest_framework import status
+from rest_framework import status,generics
 user=get_user_model()
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny,IsAuthenticated
+from userpage.serializer import UserSerializer,ChangePasswordSerializer
+from rest_framework.response import Response
+
 
 # Create your views here.
 # In django the username field of User model needs to be unique but this can be changed by addning a custom user and modifying the User location in settings.py.This can be done but is unnecssary and complicated so here you can't use same email and usernames but this can be changed by creating a custom user which i am not in the mood to create 
@@ -101,3 +106,57 @@ def login(request):
             print(response_data)
             return JsonResponse(response_data,status=200)
             
+class UserProfileView(APIView):
+    permission_classes=[IsAuthenticated]
+
+    def get(self,request,format=None):
+        serializer=UserSerializer(request.user)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    
+# class ChangePassword(APIView):
+#     permission_classes=[IsAuthenticated]
+#     def put(self,request,format=None):
+#         print(request.data)
+#         serializer=ChangePasswordSerializer(data=request.data,context={'user':request.user})
+#         if serializer.is_valid(raise_exception=True):
+#             return Response({'msg':'password changed'},status=status.HTTP_200_OK)
+#         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+class ChangePassword(generics.UpdateAPIView):
+    queryset=User.objects.all()
+    serializer_class=ChangePasswordSerializer
+    permission_classes=[IsAuthenticated]
+
+    def patch(self,request,*args,**kwargs):
+        user=self.get_object()
+        serializer=self.get_serializer(instance=user,data=request.data)
+
+        if serializer.is_valid():
+            user.set_password(serializer.validated_data['password'])
+            user.save()
+            return Response({'msg':'password changed'},status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+        """ 
+class ChangePassword(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        user = request.user  # Assuming the user is authenticated
+        serializer = ChangePasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            new_password = serializer.validated_data['password']
+            
+            # Additional checks or validations can be performed here
+
+            # Change the user's password
+            user.set_password(new_password)
+            user.save()
+
+            return Response({'msg': 'Password changed'}, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        """

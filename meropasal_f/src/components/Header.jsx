@@ -1,7 +1,6 @@
 import logo from '../images/logo2.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
 
 const Header = () => {
   const user = localStorage.getItem('user')
@@ -28,7 +27,7 @@ const Header = () => {
         </form>
         {user ?
         <div>
-        <FontAwesomeIcon className='icon' icon={faUser} size='xl' />/
+        <a href='/profile'><FontAwesomeIcon className='icon' icon={faUser} size='xl' /></a>/
         <button onClick={logout}>log-out</button>
         </div>
         :
