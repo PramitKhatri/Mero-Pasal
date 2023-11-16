@@ -180,3 +180,18 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'uploads')
 MEDIA_URL='/uploads/'
 
 
+
+# Email configuration
+
+EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST='smtp.gmail.com'  #just search this on google
+EMAIL_PORT=587
+# It is better to store the email and password in a separate file called .env file,  for that we need to install django-dotenv in our project. check readme.md for mre information
+EMAIL_HOST_USER=os.environ.get('EMAIL_USER')  # or just "youremail@gmail.com"
+EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_PASSWORD') # or jsut "your account password"
+EMAIL_USE_TLS=True
+
+
+
+# how long you want the token to be valid that was sent to reset the password in email
+PASSWORD_RESET_TIMEOUT=900   #900 sec = 15 min   

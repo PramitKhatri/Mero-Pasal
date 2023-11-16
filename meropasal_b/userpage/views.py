@@ -10,7 +10,7 @@ from rest_framework import status,generics
 user=get_user_model()
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny,IsAuthenticated
-from userpage.serializer import UserSerializer,ChangePasswordSerializer,ResetEmailSerializer
+from userpage.serializer import UserSerializer,ChangePasswordSerializer,ResetEmailSerializer,ResetPasswordSerializer
 from rest_framework.response import Response
 
 
@@ -149,6 +149,20 @@ class ResetPasswordEmail(APIView):
             return Response({'msg':'Check your email for password reset link'},status=status.HTTP_200_OK)
 
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class ResetPasswordView(APIView):
+    permission_classes=[AllowAny]
+
+    def post(self,request,userid,token,format=None):
+        serializer=ResetPasswordSerializer(data=request.data,context={'userid':userid,'token':token})
+        if serializer.is_valid(raise_exception=True):
+            return Response({'msg': 'Password changed'}, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+   
+            
 
 
         """
