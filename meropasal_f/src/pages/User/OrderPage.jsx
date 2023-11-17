@@ -34,7 +34,7 @@ const OrderPage = (props) => {
     e.preventDefault()
 
     try {
-
+      //when the order is being done from cart, the orders will be an array
       if (Array.isArray(props.data.product)) {  //check if the product is an  array (from the cart page we will send an array of multiple product objects)
         const orderdata = props.data.product.map(product => ({
           product: product.id,
@@ -49,10 +49,18 @@ const OrderPage = (props) => {
         console.log(JSON.stringify(orderdata, null, 2));
 
         await axios.post(`http://localhost:8000/order/${userid}/`, { orders: orderdata }, { headers: { 'Content-Type': "application/json", "Authorization": `Token ${userdata.token}` } })
+
+        
+        if (selectedMethod === '2') {
+          props.data.product.map(product=>(
+            callEsewa({ product_id:product.id, price: product.price*product.quantity })
+          ))
+        }
+
         localStorage.removeItem('MyCart')
-        window.location.reload()
+        // window.location.reload()
 
-
+        //when the order is being done directly from product page, it is an object.
       } else if (props.data.product) {
         // If props.data.product is an object (from the product page)
         const orderData = {
@@ -66,9 +74,14 @@ const OrderPage = (props) => {
         console.log(`order data= ${orderData}`)
         console.log(JSON.stringify(orderData, null, 2));
 
+        //-------------------------------------------------------------orderdata is set as an array because backend expexts an array, nothing more
         await axios.post(`http://localhost:8000/order/${userid}/`, { orders: [orderData] }, { headers: { 'Content-Type': "application/json", "Authorization": `Token ${userdata.token}` } });
 
-        window.location.reload()
+        if (selectedMethod === '2') {
+          callEsewa({ product_id: orderData.product, price: props.data.price })
+        }
+
+        // window.location.reload()
 
 
       } else {
@@ -82,6 +95,43 @@ const OrderPage = (props) => {
 
   }
 
+  const callEsewa = (orderdata) => {
+    var path = "https://uat.esewa.com.np/epay/main";
+
+    console.log('order data in esewa: '+ JSON.stringify(orderdata)) //to check is this function is running or not.
+    var params = {
+      amt: orderdata.price,
+      psc: 0,
+      pdc: 0,
+      txAmt: 0,
+      tAmt: orderdata.price,
+      pid: orderdata.product_id,
+      scd: "EPAYTEST",
+      su: "http://localhost:3000/esewa_payment_success",
+      fu: "http://localhost:3000/esewa_payment_failed"
+    }
+
+    function post(path, params) {
+      var form = document.createElement("form");
+      form.setAttribute("method", "POST");
+      form.setAttribute("action", path);
+
+      for (var key in params) {
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", key);
+        hiddenField.setAttribute("value", params[key]);
+        form.appendChild(hiddenField);
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+  }
+
+  useEffect(()=>{
+    console.log(selectedMethod)
+  },[selectedMethod])
 
   return (
     <>
