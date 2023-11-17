@@ -50,9 +50,9 @@ class ResetEmailSerializer(serializers.Serializer):
                 'to_email':user.email  
 
             }
-            Util.send_email(data)
+            # Util.send_email(data)
 
-            return attrs
+            return {'link':link}
 
         else:
             raise serializers.ValidationError('you are not registered user')

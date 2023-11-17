@@ -102,6 +102,10 @@ const Login = () => {
                                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                         Dont have an account yet? <Link to='../signup' className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</Link>
                                     </p>
+                                    <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                                        <a className='hover:text-red-500 underline' href="/resetuserpassword">Forgot your password?</a>
+                                    </p>
+
                                 </form>
                             </div>
                         </div>

@@ -143,10 +143,12 @@ class ChangePassword(APIView):
 class ResetPasswordEmail(APIView):
     permission_classes=[AllowAny]
     def post(self,request,format=None):
+        print(request.data)
         serializer=ResetEmailSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
-            return Response({'msg':'Check your email for password reset link'},status=status.HTTP_200_OK)
+            reset_link=serializer.validated_data['link']
+            return Response({'msg':'Check your email for password reset link .... or the console','link':reset_link},status=status.HTTP_200_OK)
 
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
@@ -156,6 +158,8 @@ class ResetPasswordView(APIView):
     permission_classes=[AllowAny]
 
     def post(self,request,userid,token,format=None):
+        print(request.data,userid,token)
+
         serializer=ResetPasswordSerializer(data=request.data,context={'userid':userid,'token':token})
         if serializer.is_valid(raise_exception=True):
             return Response({'msg': 'Password changed'}, status=status.HTTP_200_OK)

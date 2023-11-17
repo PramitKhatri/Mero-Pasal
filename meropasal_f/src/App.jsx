@@ -20,6 +20,8 @@ import SellerLayout from "./pages/Seller/SellerLayout";
 import ProductData from "./pages/Seller/ProductData";
 import UpdateProduct from "./pages/Seller/UpdateProduct";
 import Profile from "./pages/User/Profile";
+import Email from "./components/Email";
+import ResetPassword from "./components/ResetPassword";
 
 
 
@@ -36,6 +38,8 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path='login' element={<Login />} />
             <Route path="productdetails/:productid" element={<ProductDetails />} />
+            <Route path="resetuserpassword" element={<Email/>}/>
+            <Route path="user/reset_password/:userid/:token/" element={<ResetPassword/>}/>
 
             <Route element={<RequireAuth allowedRoles={['admin', 'seller', 'user']} />}>
               <Route path="cart" element={<Cart />} />

@@ -1,11 +1,14 @@
 import logo from '../images/logo2.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
   const user = localStorage.getItem('user')
+  const navigate=useNavigate()
   const logout=()=>{
     localStorage.removeItem('user')
+    navigate('/')
     window.location.reload()  //this reloads the page to show changes.
   }
   return (
