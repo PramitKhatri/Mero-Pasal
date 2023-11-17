@@ -50,10 +50,10 @@ const OrderPage = (props) => {
 
         await axios.post(`http://localhost:8000/order/${userid}/`, { orders: orderdata }, { headers: { 'Content-Type': "application/json", "Authorization": `Token ${userdata.token}` } })
 
-        
+
         if (selectedMethod === '2') {
-          props.data.product.map(product=>(
-            callEsewa({ product_id:product.id, price: product.price*product.quantity })
+          props.data.product.map(product => (
+            callEsewa({ product_id: product.id, price: product.price * product.quantity })
           ))
         }
 
@@ -98,7 +98,7 @@ const OrderPage = (props) => {
   const callEsewa = (orderdata) => {
     var path = "https://uat.esewa.com.np/epay/main";
 
-    console.log('order data in esewa: '+ JSON.stringify(orderdata)) //to check is this function is running or not.
+    console.log('order data in esewa: ' + JSON.stringify(orderdata)) //to check is this function is running or not.
     var params = {
       amt: orderdata.price,
       psc: 0,
@@ -126,12 +126,17 @@ const OrderPage = (props) => {
 
       document.body.appendChild(form);
       form.submit();
+      document.body.removeChild(form);
     }
+
+    post(path, params);
   }
 
-  useEffect(()=>{
+
+
+  useEffect(() => {
     console.log(selectedMethod)
-  },[selectedMethod])
+  }, [selectedMethod])
 
   return (
     <>
