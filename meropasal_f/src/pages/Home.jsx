@@ -6,14 +6,25 @@ import axios from 'axios'
 
 const Home = () => {
   const [products, SetProduct] = useState([])
+  const [category, setCategory] = useState([])
   // console.log(localStorage.getItem('user'))
   console.log(products)
   console.log(products.id)
+  console.log(JSON.stringify(category))
+
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/productview/')
       .then(res => SetProduct(res.data))
       .catch(err => console.log(err))
+  }, [])
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/getcategory/')
+      .then(res=>setCategory(res?.data))
+      .catch(err => console.log(err))
+      .then(res => console.log('category are' + res))
+      
   }, [])
 
   return (
@@ -36,10 +47,18 @@ const Home = () => {
         <br />
         <Link to='/lounge'>Lounge</Link>
       </h1>
-      <div>
-        {products.map((product, index) => (
-          <Card item={product} key={index} />
-        ))}
+      <div className='home'>
+        <div className='category_filter'>
+          {category.map((item,index)=>(
+            <a href={`product/${item.category}`} key={index}>{item.category}</a>
+          ))}
+        </div>
+        <div className='filtered_product'>
+          {products.map((product, index) => (
+            <Card item={product} key={index} />
+          ))}
+        </div>
+
       </div>
 
 

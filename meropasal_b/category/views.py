@@ -12,12 +12,7 @@ from rest_framework import viewsets
 # Create your views here.
 
 class AddCategoryView(APIView):
-    def get(self,request,format=None):
-        permission_classes=[permissions.AllowAny]
-        category=Category.objects.all()
-        serializer=CategorySerializer(category)
-        return Response(serializer.data)
-    
+
     def post(self,request):
         permission_classes = [IsAdminUser,IsAuthenticated]
         serializer=CategorySerializer(data=request.data)
@@ -25,6 +20,16 @@ class AddCategoryView(APIView):
             serializer.save()
             return JsonResponse({'msg':'Category added successfully'},status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class CategoryView(APIView):
+    permission_classes=[AllowAny]
+
+    def get(self,request,format=None):
+        category=Category.objects.all()
+        print(category)
+        serializer=CategorySerializer(category, many=True)   #do not forget many=True. Explanation: when you pass category to the serializer, the serializer is expecting a single instance of model i.e a single category data. so if the data being sent to the serializer is a queryset of kind which contains many category values, then we have to explicitly say to the serializer to expect many instances of category model not just one.
+        print(serializer.data)
+        return Response(serializer.data)
 
 
 

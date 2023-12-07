@@ -128,7 +128,7 @@ const OrderPage = (props) => {
       form.submit();
       document.body.removeChild(form);
     }
-
+//call the function . it is not in documentation.
     post(path, params);
   }
 

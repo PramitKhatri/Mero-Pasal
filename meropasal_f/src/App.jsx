@@ -22,6 +22,7 @@ import UpdateProduct from "./pages/Seller/UpdateProduct";
 import Profile from "./pages/User/Profile";
 import Email from "./components/Email";
 import ResetPassword from "./components/ResetPassword";
+import Filtered_Product from "./pages/Filtered_Product";
 
 
 
@@ -38,6 +39,9 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path='login' element={<Login />} />
             <Route path="productdetails/:productid" element={<ProductDetails />} />
+            <Route path="product/:category" element={<Filtered_Product />} />
+
+
             <Route path="resetuserpassword" element={<Email/>}/>
             <Route path="user/reset_password/:userid/:token/" element={<ResetPassword/>}/>
 

@@ -1,23 +1,38 @@
 from rest_framework.views import APIView
 from .serializers import ProductSerializer
 from product.models import Product
+from django.contrib.auth.models import User
 from django.http import JsonResponse
-from rest_framework.permissions import IsAuthenticated,AllowAny,IsAuthenticatedOrReadOnly
+from rest_framework.permissions import (
+    IsAuthenticated,
+    AllowAny,
+    IsAuthenticatedOrReadOnly,
+)
 from django.db import IntegrityError
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
-from rest_framework import viewsets,generics,status,permissions
+from rest_framework import viewsets, generics, status, permissions
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import permission_classes
 
+
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset=Product.objects.all().order_by('id')
-    parser_classes=(MultiPartParser,FormParser)
-    serializer_class=ProductSerializer
+    queryset = Product.objects.all().order_by("id")
+    parser_classes = (MultiPartParser, FormParser)
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+
+class FilteredProduct(APIView):
     permission_classes=[AllowAny]
 
+    def get(self,request,category,format=None):
+        product=Product.objects.filter(category__category=category) #since the category instance expects an id and we are sending the string of category, we filter it by using category__category. so basically id__categoryname
+        serializer=ProductSerializer(product,many=True, context={"request": request})  # when i view the api in my browser, the product image url is not showing the full url. it is showing this "product_image": "/uploads/products/image.jpg", but i want it to show this: "product_image": "http://127.0.0.1:8000/uploads/products/image.jpg  this is done by context={"request": request}. I donot know how?
+        return Response(serializer.data)
 
+        
+"""
 @permission_classes([AllowAny])
 @csrf_exempt
 def SellerProductView(request,sellerid):
@@ -52,52 +67,54 @@ def SellerProductView(request,sellerid):
         except Exception as e:
             return JsonResponse({'error':'Something else went wrong:{}'.format(e)},status=status.HTTP_403_FORBIDDEN)
             
-
-
+"""
 
 
 class ProductView(APIView):
-
-    def get(self,request,sellerid,format=None):
-        products=Product.objects.filter(seller=sellerid)
-        serializer=ProductSerializer(products,many=True,context={'request': request})
+    def get(self, request, sellerid, format=None):
+        # seller=User.objects.get(id=sellerid)  not necessary try 6 and 8
+        products = Product.objects.filter(seller=sellerid)
+        serializer = ProductSerializer(products, many=True, context={"request": request})
         return Response(serializer.data)
 
-    def post(self,request,sellerid,format=None):
+    def post(self, request, sellerid, format=None):
         print(request.data)
-        permission_classes=[IsAuthenticated]
-        serializer=ProductSerializer(data=request.data)
+        permission_classes = [IsAuthenticated]
+        serializer = ProductSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class Productupdatedelete(generics.RetrieveUpdateDestroyAPIView):
-    queryset=Product.objects.all()
-    serializer_class=ProductSerializer
-    permission_classes=[permissions.IsAuthenticated]
 
-    def retrieve(self,request,*args,**kwargs):  #how this code should be written
-        product = self.get_object()            #gets product automatically by using the id given in url 
+class Productupdatedelete(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def retrieve(self, request, *args, **kwargs):  # how this code should be written
+        product = (
+            self.get_object()
+        )  # gets product automatically by using the id given in url
         serializer = self.get_serializer(product)
         return Response(serializer.data)
 
-    def delete(self,request,*args,**kwargs):  #how sir taught us to do
-        product=Product.objects.filter(pk=kwargs['pk'])  #gets product by explicitly setting the id
+    def delete(self, request, *args, **kwargs):  # how sir taught us to do
+        product = Product.objects.filter(
+            pk=kwargs["pk"]
+        )  # gets product by explicitly setting the id
         if product.exists():
-            self.destroy(request,*args,**kwargs)
+            self.destroy(request, *args, **kwargs)
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    def put(self,request,*args,**kwargs):
+    def put(self, request, *args, **kwargs):
         print(request.data)
-        product=self.get_object()
-        serializer = self.get_serializer(product,data=request.data)
+        product = self.get_object()
+        serializer = self.get_serializer(product, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'msg':'product updated'},status=status.HTTP_202_ACCEPTED)
+            return Response({"msg": "product updated"}, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-        

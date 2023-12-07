@@ -33,7 +33,7 @@ const ProductDetails = () => {
                 .then(sellerdata => setSeller(sellerdata.data))
                 .catch(err => console.log(err))
         }
-    }, [params.productid, product.seller])
+    }, [])
 
     const decreasequantity = () => {
         if (quantity > 1) {

@@ -47,7 +47,15 @@ select {
     border: 2px solid grey;
 }
 
-
+h2{
+    font-size: var(--fonthuge);
+    color: var(--accent2nd);
+    padding: 1rem 0.5rem;
+}
+h1{
+    font-size: var(--fontnormal);
+    padding: 1rem 0;
+}
 
 input:focus,
 select:focus,
@@ -116,6 +124,31 @@ nav ul li:hover{
 
 
 /* navbar stop */
+
+/* ============homepage start================ */
+
+.home{
+    width: 100%;
+    display: flex;
+}
+
+.category_filter a:hover{
+    color: var(--accentdim)
+}
+.category_filter a{
+    /* width: 15%; */
+    display: block;
+    border-top:1px solid var(--primarydark) ;
+    font-weight: bold;
+    padding: 0.5rem ;
+}
+
+.filtered_product{
+    width: 80%;
+}
+
+/* ============homepage start================ */
+
 /* +===============seller register start================== */
 
 .form{
@@ -137,7 +170,7 @@ nav ul li:hover{
 /* ==================CARD SECTION START========================= */
 .card{
     height: 22rem;
-    width: 19.5rem;
+    width: 17rem;
     display: inline-flex;
     flex-wrap: wrap;
     margin: 10px;
