@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets,permissions,status
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from userorders.models import PaymentMethod,Order
-from userorders.serializers import PaymentMethodSerializer,OrderSerializer
+from userorders.serializers import PaymentMethodSerializer,OrderSerializer,OrderItemSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -25,8 +25,18 @@ class OrderView(APIView):
     def post(self,request,userid):
         print(request.data)
         order_data = request.data.get('orders', [])  #since we are sending data from the frontend inside an orders object
-        serializer = OrderSerializer(data=order_data, many=True)  #many means more than one product order
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
+        orderitem_data=request.data.get('orderitem',[])
+
+        order_serializer = OrderSerializer(data=order_data)  #many means more than one product order
+        if order_serializer.is_valid(raise_exception=True):
+            order_serializer.save()
+
+            for orderitem in orderitem_data:
+                orderitem['orders']=order_serializer.id
+                OrderItemSerializer=OrderItemSerializer(data=orderitem)
+
+                if OrderItemSerializer.is_valid(raise_exception=True):
+                    OrderItemSerializer.save()
+                    
             return Response({'msg':'Order completed'},status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
