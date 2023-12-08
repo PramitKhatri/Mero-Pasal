@@ -5,6 +5,7 @@ const OrderPage = (props) => {
   const userdata = JSON.parse(localStorage.getItem('user'))
   const [userid, setUserid] = useState()
   const [address, setAddress] = useState('')
+  const [city, setCity] = useState('')
   const [paymentmethod, setPaymentMethod] = useState('')
   const [selectedMethod, setSelectedMethod] = useState('')
 
@@ -30,69 +31,108 @@ const OrderPage = (props) => {
   }, [paymentmethod, userid])
 
   console.log(`length of product=${props.data.product.length}`)
+  // const OrderHandler = async (e) => {
+  //   e.preventDefault()
+
+  //   try {
+  //     //when the order is being done from cart, the orders will be an array
+  //     if (Array.isArray(props.data.product)) {  //check if the product is an  array (from the cart page we will send an array of multiple product objects)
+  //       const orderdata = props.data.product.map(product => ({
+  //         product: product.id,
+  //         user: userid,
+  //         seller: product.seller,
+  //         quantity: product.quantity,
+  //         address: address,
+  //         paymentmethod: selectedMethod,
+  //       }))
+
+  //       console.log(`order data= ${orderdata}`)
+  //       console.log(JSON.stringify(orderdata, null, 2));
+
+  //       await axios.post(`http://localhost:8000/order/${userid}/`, { orders: orderdata }, { headers: { 'Content-Type': "application/json", "Authorization": `Token ${userdata.token}` } })
+
+
+  //       if (selectedMethod === '2') {
+  //         props.data.product.map(product => (
+  //           callEsewa({ product_id: product.id, price: product.price * product.quantity })
+  //         ))
+  //       }
+
+  //       localStorage.removeItem('MyCart')
+  //       // window.location.reload()
+
+  //       //when the order is being done directly from product page, it is an object.
+  //     } else if (props.data.product) {
+  //       // If props.data.product is an object (from the product page)
+  //       const orderData = {
+  //         product: props.data.product.id,
+  //         user: userid,
+  //         seller: props.data.product.seller,
+  //         quantity: props.data.product.quantity,
+  //         address: address,
+  //         paymentmethod: selectedMethod,
+  //       }
+  //       console.log(`order data= ${orderData}`)
+  //       console.log(JSON.stringify(orderData, null, 2));
+
+  //       //-------------------------------------------------------------orderdata is set as an array because backend expexts an array, nothing more
+  //       await axios.post(`http://localhost:8000/order/${userid}/`, { orders: [orderData] }, { headers: { 'Content-Type': "application/json", "Authorization": `Token ${userdata.token}` } });
+
+  //       if (selectedMethod === '2') {
+  //         callEsewa({ product_id: orderData.product, price: props.data.price })
+  //       }
+
+  //       // window.location.reload()
+
+
+  //     } else {
+  //       // Handle the case where props.data.product is not defined
+  //       console.error('No product data to place an order.');
+  //     }
+  //   }
+  //   catch (err) {
+  //     console.log(err)
+  //   }
+
+  // }
+
+
   const OrderHandler = async (e) => {
     e.preventDefault()
 
     try {
-      //when the order is being done from cart, the orders will be an array
-      if (Array.isArray(props.data.product)) {  //check if the product is an  array (from the cart page we will send an array of multiple product objects)
-        const orderdata = props.data.product.map(product => ({
-          product: product.id,
-          user: userid,
-          seller: product.seller,
-          quantity: product.quantity,
-          address: address,
-          paymentmethod: selectedMethod,
-        }))
 
-        console.log(`order data= ${orderdata}`)
-        console.log(JSON.stringify(orderdata, null, 2));
-
-        await axios.post(`http://localhost:8000/order/${userid}/`, { orders: orderdata }, { headers: { 'Content-Type': "application/json", "Authorization": `Token ${userdata.token}` } })
-
-
-        if (selectedMethod === '2') {
-          props.data.product.map(product => (
-            callEsewa({ product_id: product.id, price: product.price * product.quantity })
-          ))
-        }
-
-        localStorage.removeItem('MyCart')
-        // window.location.reload()
-
-        //when the order is being done directly from product page, it is an object.
-      } else if (props.data.product) {
-        // If props.data.product is an object (from the product page)
-        const orderData = {
-          product: props.data.product.id,
-          user: userid,
-          seller: props.data.product.seller,
-          quantity: props.data.product.quantity,
-          address: address,
-          paymentmethod: selectedMethod,
-        }
-        console.log(`order data= ${orderData}`)
-        console.log(JSON.stringify(orderData, null, 2));
-
-        //-------------------------------------------------------------orderdata is set as an array because backend expexts an array, nothing more
-        await axios.post(`http://localhost:8000/order/${userid}/`, { orders: [orderData] }, { headers: { 'Content-Type': "application/json", "Authorization": `Token ${userdata.token}` } });
-
-        if (selectedMethod === '2') {
-          callEsewa({ product_id: orderData.product, price: props.data.price })
-        }
-
-        // window.location.reload()
-
-
-      } else {
-        // Handle the case where props.data.product is not defined
-        console.error('No product data to place an order.');
+      //set the order data
+      const order_detail = {
+        "user": userid,
+        "address": address,
+        "city": city,
+        "total_price": props.data.price,
+        "payment_method": +selectedMethod,
       }
-    }
-    catch (err) {
-      console.log(err)
-    }
 
+
+      //product has all its data with it. so price, quantity name and everything being sent from cart or the details
+      // console.log(props.data.product)
+      const order_items = props.data.product.map(product => ({
+        product: product.id,
+        price: product.price,
+        quantity:product.quantity
+      }))
+
+      await axios.post(`http://localhost:8000/order/${userid}/`, { order_detail: order_detail, order_items: order_items }, { headers: { 'Content-Type': "application/json", "Authorization": `Token ${userdata.token}` } });
+
+      // if (selectedMethod === '2') {
+      //   callEsewa({ product_id: orderData.product, price: props.data.price })
+      // }
+
+
+      console.log("orders: " + JSON.stringify(order_detail))
+      console.log("order item: " + JSON.stringify(order_items))
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const callEsewa = (orderdata) => {
@@ -128,7 +168,7 @@ const OrderPage = (props) => {
       form.submit();
       document.body.removeChild(form);
     }
-//call the function . it is not in documentation.
+    //call the function . it is not in documentation.
     post(path, params);
   }
 
@@ -145,6 +185,10 @@ const OrderPage = (props) => {
           <div className="order-input">
             <label htmlFor="Address">Address</label>
             <input type="text" id="Address" onChange={(event) => { setAddress(event.target.value) }} value={address} required />
+          </div>
+          <div className="order-input">
+            <label htmlFor="City">City</label>
+            <input type="text" id="City" onChange={(event) => { setCity(event.target.value) }} value={city} required />
           </div>
           <div>
             <label htmlFor="paymentmethod">Payment Method:</label>

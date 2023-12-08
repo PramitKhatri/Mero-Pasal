@@ -7,7 +7,7 @@ class PaymentMethodSerializer(serializers.ModelSerializer):
         fields=['id','paymentmethod']
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=Order
         fields='__all__'

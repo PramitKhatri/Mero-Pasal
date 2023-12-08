@@ -30,8 +30,8 @@ class Order(models.Model):
     order_status=models.CharField(max_length=100,choices=order_status,default="pending")
 
 
-    def __str__(self):
-        return f'user:{self.user.username},address:{self.address},city:{self.city}'
+    def __str__(self): #you know how you are going to set order id to the orderitem below, this str is how you get that id  :)!!
+        return f'id:{self.id},user:{self.user.username}'
 
 class OrderItem(models.Model):
     order=models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -39,5 +39,5 @@ class OrderItem(models.Model):
     price=models.DecimalField(max_digits=10,decimal_places=2,null=False)
     quantity=models.IntegerField(null=False)
 
-    def __str__(self):
-        return f'Order: {self.order.id}, Product: {self.product.name}, Quantity: {self.quantity}'
+    def __str__(self):  #Hey a new way to show the details in admin page
+        return f'Order: {self.order.id}, Product: {self.product.product_name}, Quantity: {self.quantity}'

@@ -24,8 +24,11 @@ const Cart = () => {
             accumulator + item.quantity * item.price
         ), 0)
         setTotal(totalamt)
+        console.log("total amt should be:" + total)
+        console.log("total amt should be:" + totalamt)
+
     }, [])
-    console.log(total)
+    console.log("total amt should be:" + total)
 
     const decreasequantity = (id) => {
         const updateproducts = product.map(item => {
