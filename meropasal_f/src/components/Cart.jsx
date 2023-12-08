@@ -5,7 +5,7 @@ import OrderPage from '../pages/User/OrderPage'
 
 const Cart = () => {
     const [product, setProduct] = useState([])
-    const [quantity, setQuantity] = useState(product.quantity)
+    const [quantity, setQuantity] = useState(product.quantity)  //future note maybe do a useeffect hook that will update quantity when quantity changes
     const [total, setTotal] = useState()
 
     const [orderclicked, setOrderClicked] = useState(false)

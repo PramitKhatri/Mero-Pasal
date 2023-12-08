@@ -10,8 +10,13 @@ const ProductDetails = () => {
     const [quantity, setQuantity] = useState(1)
 
 
+
     //for this to work with cart as well which has multiple products with different quantity, i need to insert the quantity inside product object so that it would mimic the behaviour from the MyCart in local storage, so
-    
+    useEffect(()=>{
+        product.quantity=quantity
+        console.log(product)
+    },[quantity])
+
 
     const [orderclicked,setOrderClicked]=useState(false)
 
@@ -34,6 +39,10 @@ const ProductDetails = () => {
                 .catch(err => console.log(err))
         }
     }, [])
+
+    useEffect(()=>{
+        
+    })
 
     const decreasequantity = () => {
         if (quantity > 1) {
@@ -96,7 +105,7 @@ const ProductDetails = () => {
                         <p className='product-category'>category:<a style={{ textDecoration: 'underline' }} className='hover:text-red-700'>{product.category}</a></p>
                         <div className="product-quantity">
                             <button className='hover:bg-slate-400' onClick={decreasequantity}>-</button>
-                            <input type="number" readOnly value={quantity} />
+                            <input type="number" readOnly value={quantity} onChange={e=>setQuantity(e.target.value)} />
                             <button className='hover:bg-slate-400' onClick={increasequantity}>+</button>
                         </div>
                     </div>
@@ -107,7 +116,8 @@ const ProductDetails = () => {
             {orderclicked &&
             <div className='order'>
                 <button onClick={()=>setOrderClicked(false)}>Cancel</button>
-            <OrderPage data={{product:product,price:(product.price*quantity)}} />
+                {/* Here I have to send product as an array by doing [product because so that map function can work which only works on an array] */}
+            <OrderPage data={{product:[product],price:(product.price*quantity)}} />
             </div>
             }
             
