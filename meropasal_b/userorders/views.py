@@ -19,7 +19,7 @@ class OrderView(APIView):
 
     def get(self,request,userid,format=None):
         order=Order.objects.filter(user_id=userid) # In Django, when you define foreign key relationships between models, the convention is to use the name of the related model followed by "_id" as the field name by default. So, if you have a foreign key relationship to the User model, the field name is typically user_id or user__username  .(double underscore for other things)
-        serializer=OrderSerializer(order, many=True)
+        serializer=OrderDetailSerializer(order, many=True)
         return Response(serializer.data)
 
     def post(self,request,userid):
@@ -33,6 +33,7 @@ class OrderView(APIView):
             orderdetail_instance=orderdetail_serializer.save()  #we can do just orderdetail_serializer.save() but to access the order id and put it in orderitems we create an instance right when it is saved to db so that we can access what is in the __str__ of model
 
             print("orderdetail_instance is :"+str(orderdetail_instance))  #for debugging
+
             for singleitem in order_items:  #loop over every item to create an instance of the item all having the same order detail
                 singleitem['order']=orderdetail_instance.id         # Set the order id property in orderitem. note that singleitem is a temporary variable name to hold the orderitem
 
@@ -42,6 +43,9 @@ class OrderView(APIView):
 
                 if orderitem_serializer.is_valid(raise_exception=True):
                     orderitem_serializer.save()
-                    
-            return Response({'msg':'Order completed'},status=status.HTTP_201_CREATED)
+
+            response_orderdetail=OrderDetailSerializer(orderdetail_instance)  
+            print("after this response_orderdetail will not only contain the data but also the whole serialized model information so only send the data")
+            print(response_orderdetail) 
+            return Response(response_orderdetail.data,status=status.HTTP_201_CREATED)  # I could probably just to return Response({orderdetail_instance})  but this makes it more clear
         return Response(orderdetail_serializer.errors,status=status.HTTP_400_BAD_REQUEST)

@@ -31,7 +31,7 @@ class Order(models.Model):
 
 
     def __str__(self): #you know how you are going to set order id to the orderitem below, this str is how you get that id  :)!!
-        return f'id:{self.id},user:{self.user.username}'
+        return f'id:{self.id},user:{self.user.username},price:{self.total_price}'
 
 class OrderItem(models.Model):
     order=models.ForeignKey(Order, on_delete=models.CASCADE)
