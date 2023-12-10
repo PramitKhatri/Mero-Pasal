@@ -85,3 +85,17 @@ class OrderItemToSendBackToSeller(APIView):
         serializer=OrderItemSerializerToSendBackToSeller(orderitems,many=True,context={"request":request})
         # print(serializer.data)
         return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+# for now this code wont do anything as orderstatus property needs to be changed to belong to orderitem
+    def put(self,request,sellerid,format=None):
+        print(request.data)
+
+        orderitem=OrderItem.objects.get(id=request.data.get('id'))
+        print(orderitem)
+
+        serializer=OrderItemSerializerToSendBackToSeller(orderitem,data=request.data.get('order_status'))
+        if serializer.is_valid():
+            serializer.save()
+            return Response(None)
+        return Response(None)

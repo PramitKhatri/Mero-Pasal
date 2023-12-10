@@ -40,11 +40,11 @@ const MyOrders = () => {
 
   }
 
-  useEffect(()=>{
-    if(orders.length>0){
+  useEffect(() => {
+    if (orders.length > 0) {
       getOrderItemDetails()
     }
-  },[orders,getOrderItemDetails])
+  }, [orders, getOrderItemDetails])
 
 
   // console.log(product)
@@ -56,51 +56,33 @@ const MyOrders = () => {
         ?
         <div className="cart-empty">Your cart is empty. <a href="/" className="hover:text-red-500 underline">Shop Now</a></div>
         :
-        <div>
-          <div className="cart-container">
-            <div className="cart-products">
-              <table className="cart-items">
-                <th>Image</th>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Action</th>
-              </table>
+        <div className="container">
 
-              {orderitems.map((item, index) => (
-                <table className="cart-items" key={index}>
-                  <td><img src={item.product.product_image} alt={item.product.product_name} /></td>
-                  <td>{item.product.product_name}</td>
-                  <td>{item.product.price}</td>
-                  <td>{item.quantity}</td>
-                  <td>
+          <table className="table">
+            <tr className="table-row">
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Action</th>
+            </tr>
+
+
+            {orderitems.map((item, index) => (
+              <tr key={index} className="table-row">
+                <td><img src={item.product.product_image} alt={item.product.product_name} /></td>
+                <td>{item.product.product_name}</td>
+                <td>{item.product.price}</td>
+                <td>{item.quantity}</td>
+                <td>
                   <button className='bg-amber-400 hover:bg-amber-600 cart-delete'  >Delete</button>
-                  </td>
-                  {/* <p key={index}>{item.product.price}</p> */}
-                </table>
-              ))}
+                </td>
+              </tr>
+            ))}
+          </table>
 
-              {/* <div >
-                {orderitems.map((item, index) => (
-                  <div className="cart-items" key={index}>
-                    <img src={item.product_image} alt="" />
-                    <p style={{ width: '30ch' }}>{item.product_name}</p>
-                    {Array.isArray(orders)&& orders.length > 0 ? (
-                      orders.map((order, i) => (
-                        order.product===item.id && <p key={i}>Quantity: {order.quantity}</p>
-                      ))
-                    ) : (
-                      <p>No orders available.</p>
-                    )}
-                    <p>${item.price}</p>
-                    <button className='bg-amber-400 hover:bg-amber-600 cart-delete'  >Delete</button>
-                  </div>
-                ))}
-              </div> */}
-
-            </div>
-          </div>
         </div>
+
 
       }
     </>
