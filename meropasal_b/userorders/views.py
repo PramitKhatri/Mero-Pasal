@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets,permissions,status,generics
 from rest_framework.permissions import AllowAny,IsAuthenticated
-from userorders.models import PaymentMethod,Order
-from userorders.serializers import PaymentMethodSerializer,OrderDetailSerializer,OrderItemSerializer
+from userorders.models import PaymentMethod,Order,OrderItem
+from userorders.serializers import PaymentMethodSerializer,OrderDetailSerializer,OrderItemSerializer,OrderItemSerializerToSendBack
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -65,3 +65,13 @@ class OrderUpdateView(generics.UpdateAPIView):
             serializer.save()
             return Response({"msg": "order paid"}, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class OrderItemToSendBack(APIView):
+    # permission_classes=[IsAuthenticated]
+    permission_classes=[AllowAny]
+
+    def get(self,request,orderid,format=None):
+        orderitems=OrderItem.objects.filter(order=orderid)
+        serializer=OrderItemSerializerToSendBack(orderitems,many=True,context={"request": request})
+        return Response(serializer.data)
