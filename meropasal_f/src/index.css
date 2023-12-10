@@ -131,6 +131,22 @@ nav ul li:hover{
     width: 100%;
     display: flex;
 }
+.home-links{
+    display: flex;
+    align-items: center;
+}
+
+.home-links .link{
+    padding: 0.5rem;
+    background-color: var(--primarygrey);
+    border-radius: 0.5rem;
+    margin: 1rem 0.5rem;
+    transition: 0.5s;
+}
+
+.home-links .link:hover{
+    background-color: var(--primarydark);
+}
 
 .category_filter a:hover{
     color: var(--accentdim)

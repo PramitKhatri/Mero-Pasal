@@ -171,7 +171,7 @@ const callEsewa = (orderdata) => {
 
     document.body.appendChild(form);
     form.submit();
-    document.body.removeChild(form);
+    // document.body.removeChild(form);
   }
   //call the function . it is not in documentation.
   post(path, params);

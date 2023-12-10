@@ -11,8 +11,8 @@ const Notfound = () => {
     }, [navigate])
   return (
     <>
-     404 Not found
-     <p>you are being redirected to homepage</p>
+     <h2>404 Not found</h2>
+     <p className="text-3xl">you are being redirected to homepage</p>
      </>
   )
 }

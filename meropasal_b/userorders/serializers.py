@@ -16,3 +16,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model=OrderItem
         fields='__all__'
+
+class PaymentUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Order
+        fields=['payment_status']
+    

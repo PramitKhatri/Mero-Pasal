@@ -21,35 +21,33 @@ const Home = () => {
 
   useEffect(() => {
     axios.get('http://localhost:8000/getcategory/')
-      .then(res=>setCategory(res?.data))
+      .then(res => setCategory(res?.data))
       .catch(err => console.log(err))
       .then(res => console.log('category are' + res))
-      
+
   }, [])
 
   return (
     <>
+      <div className="text-xl font-bold home-links">
+        QuickLinks:
+        <br />
+        <Link className='link' to="/signup">signup</Link>
+        <br />
+        <Link className='link' to='/login'>Login</Link>
+        <br />
+        <Link className='link' to='/admin'>Admin page</Link>
+        <br />
+        <Link className='link' to='/seller'>Seller Homepage</Link>
+        <br />
+        <Link className='link' to='/unauthorized'>Unauthorized</Link>
+        <br />
+        <Link className='link' to='/lounge'>Lounge</Link>
+      </div>
 
-
-
-      <h1 className="text-3xl font-bold underline">
-        Welcome!!
-        <br />
-        <Link to="/signup">signup</Link>
-        <br />
-        <Link to='/login'>Login</Link>
-        <br />
-        <Link to='/admin'>Admin page</Link>
-        <br />
-        <Link to='/seller'>Seller Homepage</Link>
-        <br />
-        <Link to='/unauthorized'>Unauthorized</Link>
-        <br />
-        <Link to='/lounge'>Lounge</Link>
-      </h1>
       <div className='home'>
         <div className='category_filter'>
-          {category.map((item,index)=>(
+          {category.map((item, index) => (
             <a href={`product/${item.category}`} key={index}>{item.category}</a>
           ))}
         </div>

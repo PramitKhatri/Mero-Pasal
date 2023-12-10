@@ -23,6 +23,8 @@ import Profile from "./pages/User/Profile";
 import Email from "./components/Email";
 import ResetPassword from "./components/ResetPassword";
 import Filtered_Product from "./pages/Filtered_Product";
+import EsewaFailed from "./components/EsewaFailed";
+import EsewaSuccess from "./components/EsewaSuccess";
 
 
 
@@ -41,6 +43,8 @@ function App() {
             <Route path="productdetails/:productid" element={<ProductDetails />} />
             <Route path="product/:category" element={<Filtered_Product />} />
 
+            <Route path="esewa_payment_success" element={<EsewaSuccess/>} />
+            <Route path="esewa_payment_failed" element={<EsewaFailed/>} />
 
             <Route path="resetuserpassword" element={<Email/>}/>
             <Route path="user/reset_password/:userid/:token/" element={<ResetPassword/>}/>

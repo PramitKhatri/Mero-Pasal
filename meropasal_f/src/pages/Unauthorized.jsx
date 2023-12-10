@@ -6,7 +6,7 @@ const Unauthorized = () => {
   
   return (
     <>
-      You are  Unauthorized to view this page.
+      <h2>You are  Unauthorized to view this page.</h2>
       <button onClick={goBack}>Go Back</button>
     </>
   )
