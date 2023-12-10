@@ -25,6 +25,7 @@ import ResetPassword from "./components/ResetPassword";
 import Filtered_Product from "./pages/Filtered_Product";
 import EsewaFailed from "./components/EsewaFailed";
 import EsewaSuccess from "./components/EsewaSuccess";
+import Orders from "./pages/Seller/Orders";
 
 
 
@@ -71,6 +72,7 @@ function App() {
               <Route path="productdata" element={<ProductData/>}/>
               <Route path="AddProduct" element={<AddProduct />} />
               <Route path="Update/:id" element={<UpdateProduct/>}/>
+              <Route path="orders" element={<Orders/>}/>
             </Route>
 
           </Route>

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([])
-  const [product, setProduct] = useState([])
+  // const [product, setProduct] = useState([])
   const [orderitems, setOrderitems] = useState([])
   const userdata = JSON.parse(localStorage.getItem('user'))
   console.log(userdata)
@@ -44,7 +44,7 @@ const MyOrders = () => {
     if(orders.length>0){
       getOrderItemDetails()
     }
-  },[orders])
+  },[orders,getOrderItemDetails])
 
 
   // console.log(product)

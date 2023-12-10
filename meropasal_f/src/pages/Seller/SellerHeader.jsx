@@ -15,7 +15,7 @@ const SellerHeader = () => {
             <ul>
                 <li><a href="/seller">Home</a></li>
                 <li><a href="#">My Products</a></li>
-                <li><a href="#">Orders</a></li>
+                <li><a href="/seller/orders">Orders</a></li>
                 <li><a href="/seller/AddProduct">Add Products</a></li>
             </ul>
 

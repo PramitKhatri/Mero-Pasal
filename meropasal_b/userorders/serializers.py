@@ -29,4 +29,13 @@ class OrderItemSerializerToSendBack(serializers.ModelSerializer):
     class Meta:
         model=OrderItem
         fields='__all__'
+
+
+class OrderItemSerializerToSendBackToSeller(serializers.ModelSerializer):
+    order=OrderDetailSerializer()  #i am doing these so that I can get all data of order and product with a single request.
+    product=ProductSerializer()
+
+    class Meta:
+        model=OrderItem
+        fields='__all__'
     

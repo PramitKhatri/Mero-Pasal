@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets,permissions,status,generics
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from userorders.models import PaymentMethod,Order,OrderItem
-from userorders.serializers import PaymentMethodSerializer,OrderDetailSerializer,OrderItemSerializer,OrderItemSerializerToSendBack
+from userorders.serializers import PaymentMethodSerializer,OrderDetailSerializer,OrderItemSerializer,OrderItemSerializerToSendBack,OrderItemSerializerToSendBackToSeller
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -75,3 +75,13 @@ class OrderItemToSendBack(APIView):
         orderitems=OrderItem.objects.filter(order=orderid)
         serializer=OrderItemSerializerToSendBack(orderitems,many=True,context={"request": request})
         return Response(serializer.data)
+
+class OrderItemToSendBackToSeller(APIView):
+    permission_classes=[IsAuthenticated]
+
+    def get(self,request,sellerid,format=None):
+        orderitems=OrderItem.objects.filter(product__seller=sellerid)
+        # print("orderitems are:"+str(orderitems))
+        serializer=OrderItemSerializerToSendBackToSeller(orderitems,many=True,context={"request":request})
+        # print(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)
