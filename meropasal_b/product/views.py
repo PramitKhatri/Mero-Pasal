@@ -1,12 +1,12 @@
 from rest_framework.views import APIView
-from .serializers import ProductSerializer
+from product.serializers import ProductSerializer,ProductSerializerForAdmin
 from product.models import Product
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from rest_framework.permissions import (
     IsAuthenticated,
     AllowAny,
-    IsAuthenticatedOrReadOnly,
+    IsAuthenticatedOrReadOnly, IsAdminUser
 )
 from django.db import IntegrityError
 from rest_framework.exceptions import ParseError
@@ -118,3 +118,16 @@ class Productupdatedelete(generics.RetrieveUpdateDestroyAPIView):
             serializer.save()
             return Response({"msg": "product updated"}, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProductViewForAdmin(APIView):
+    permission_classes=[IsAuthenticated,IsAdminUser]
+
+    def get(self,request,format=None):
+        product=Product.objects.all().order_by('id')
+        serializer=ProductSerializerForAdmin(product, many=True,context={'request':request})
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+    def delete(self,request,format=None):
+        print(request.data)
+        return Response(status=status.HTTP_204_NO_CONTENT)

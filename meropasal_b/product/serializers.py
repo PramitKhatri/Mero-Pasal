@@ -3,6 +3,7 @@ from .models import Product
 from django.contrib.auth.models import User
 
 from category.models import Category
+from category.serializer import CategorySerializer
 from django.conf import settings
 
 from userpage.serializer import UserSerializer
@@ -47,3 +48,11 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model=Product
         fields=['id','product_name','seller','category','description','price','stock','product_image','created_at']
+
+
+class ProductSerializerForAdmin(serializers.ModelSerializer):
+    seller=UserSerializer()
+    category=CategorySerializer()
+    class Meta:
+        model=Product
+        fields='__all__'

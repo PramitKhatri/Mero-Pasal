@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import Card from "../components/Card"
 
 const Filtered_Product = () => {
@@ -29,7 +29,7 @@ const Filtered_Product = () => {
       <div className='home'>
         <div className='category_filter'>
           {category.map((item, index) => (
-            <a href={`product/${item.category}`} key={index}>{item.category}</a>
+            <a href={`${item.category}`} key={index}>{item.category}</a>
           ))}
         </div>
         <div className='filtered_product'>

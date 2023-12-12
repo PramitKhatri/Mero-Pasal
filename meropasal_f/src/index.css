@@ -130,10 +130,12 @@ nav ul li:hover{
 .home{
     width: 100%;
     display: flex;
+
 }
 .home-links{
     display: flex;
     align-items: center;
+
 }
 
 .home-links .link{
@@ -147,23 +149,82 @@ nav ul li:hover{
 .home-links .link:hover{
     background-color: var(--primarydark);
 }
-
-.category_filter a:hover{
-    color: var(--accentdim)
+.category_filter{
+    background-image:linear-gradient(to right,var(--primary), var(--white));
 }
 .category_filter a{
     /* width: 15%; */
     display: block;
     border-top:1px solid var(--primarydark) ;
-    font-weight: bold;
+    font-weight: bolder;
     padding: 0.5rem ;
+
 }
+.category_filter a:hover{
+    background-image:linear-gradient(to right, var(--primarygrey),var(--primary));
+
+}
+
 
 .filtered_product{
     width: 80%;
+    background-image:linear-gradient(to right, var(--white),var(--primary));
 }
 
 /* ============homepage start================ */
+
+/* =======Signup options start============== */
+
+.signupoptions{
+    padding: 0 20rem;
+    background-image:linear-gradient(to right, var(--primarygrey),var(--primary));
+    text-align: center;
+
+}
+
+.signupoptions h2{
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+}
+
+.signoptions-container{
+    display: flex;
+}
+
+.signupoptions-card{
+    width: 30rem;
+    padding: 3rem 3rem;
+    box-shadow: 5px 0 15px var(--primarydark);
+    border-radius: 0.5rem;
+    margin: 4rem;
+    height: 20rem;
+    font-size: var(--fontnormal);
+    font-weight: bold;
+    background-color: var(--primary);
+    transition: 0.2s ease-in;
+}
+
+.signupoptions-card:hover{
+    box-shadow: 0 5px 15px var(--primarydark);
+}
+
+.signupoptions-card a{
+    padding: 1rem;
+    background-image: linear-gradient(to right,var(--accentdim),var(--accent),var(--accent2nd) ) ;
+    color: var(--primary);
+    border-radius: 0.5rem;
+    display: block;
+    margin-top: 2.5rem;
+    transition: 0.2s ease-in;
+}
+
+.signupoptions-card a:hover{
+    background-image: linear-gradient(to right,var(--accentdim),var(--accent2nd),var(--accent) ) ;
+    padding: 1.1rem;
+}
+
+
+/* =======Signup options end================ */
 
 /* +===============seller register start================== */
 
@@ -189,23 +250,38 @@ nav ul li:hover{
     width: 17rem;
     display: inline-flex;
     flex-wrap: wrap;
-    margin: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    margin: 10px 15px;
+    box-shadow: 5px 0 15px var(--primarydark);
     padding: 10px;
     border-radius: 10px;
+    transition: 0.2s ease-in;
+    background-color: var(--white);
+}
+.card:hover{
+    box-shadow: 0 5px 15px var(--primarydark);
+    transform: translateY(-0.1rem);
 }
 
 .card .card-image{
     width: 98%;
     height: 60%;
     /* object-fit: fill; */
+    transition: 0.2s ease-in-out;
 
+}
+.card:hover .card-image{
+    transform: scale(1.05);
 }
 .card .card-button{
     background-color: var(--accentdim);
     color: var(--white);
     padding: 0.6rem;
-    border-radius: 0.2rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    transition: 0.5s ease;
+}
+.card .card-button:hover{
+    padding:0.65rem ;
 }
 
 
@@ -217,6 +293,7 @@ nav ul li:hover{
 .product-details{
     display: flex;
     padding: 2.5rem;
+    
 
 }
 
@@ -225,11 +302,13 @@ nav ul li:hover{
     width: 60%;
 }
 
+
+
 .product-details .product-desc{
     width: 40%;
     /* min-height: 30rem; */
     position: relative;
-    background-color: var(--primary);   
+    background-image:linear-gradient(to right,var(--primary),var(--primary),var(--primarygrey)) ;   
     font-size: var(--fontnormal); 
 }
 
@@ -275,12 +354,24 @@ nav ul li:hover{
     color: var(--primary);
     left: 0;
     background-color:var(--accent2nd);
+    transition: 0.2s ease-in-out;
+}
+.product-details .product-addtocart:hover{
+    background-color: var(--accentdim);
 }
 
 .product-details .product-order{
     color: var(--primary);
     background-color: var(--primarydark);
     right: 0;
+    transition: 0.2s ease-in-out;
+    opacity: 0.9;
+
+}
+.product-details .product-order:hover{
+    color: var(--white);
+    opacity: 1;
+
 }
 .order{
     position: absolute;

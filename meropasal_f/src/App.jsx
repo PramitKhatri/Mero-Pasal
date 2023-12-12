@@ -26,6 +26,9 @@ import Filtered_Product from "./pages/Filtered_Product";
 import EsewaFailed from "./components/EsewaFailed";
 import EsewaSuccess from "./components/EsewaSuccess";
 import Orders from "./pages/Seller/Orders";
+import SignUpOptions from "./components/SignUpOptions";
+import SellerSignup from "./pages/Seller/SellerSignup";
+import AdminHome from "./pages/Admin/AdminHome";
 
 
 
@@ -39,21 +42,23 @@ function App() {
         <Routes>
           <Route path='/' element={<Layouts />}>
             <Route index element={<Home />} />
-            <Route path="signup" element={<Signup />} />
+            <Route path="signup/user" element={<Signup />} />
+            <Route path="signup" element={<SignUpOptions />} />
+            <Route path="signup/seller" element={<SellerSignup />} />
             <Route path='login' element={<Login />} />
             <Route path="productdetails/:productid" element={<ProductDetails />} />
             <Route path="product/:category" element={<Filtered_Product />} />
 
-            <Route path="esewa_payment_success" element={<EsewaSuccess/>} />
-            <Route path="esewa_payment_failed" element={<EsewaFailed/>} />
+            <Route path="esewa_payment_success" element={<EsewaSuccess />} />
+            <Route path="esewa_payment_failed" element={<EsewaFailed />} />
 
-            <Route path="resetuserpassword" element={<Email/>}/>
-            <Route path="user/reset_password/:userid/:token/" element={<ResetPassword/>}/>
+            <Route path="resetuserpassword" element={<Email />} />
+            <Route path="user/reset_password/:userid/:token/" element={<ResetPassword />} />
 
             <Route element={<RequireAuth allowedRoles={['admin', 'seller', 'user']} />}>
               <Route path="cart" element={<Cart />} />
               <Route path="myorders" element={<MyOrders />} />
-              <Route path='profile' element={<Profile/>}/>
+              <Route path='profile' element={<Profile />} />
             </Route>
           </Route>
 
@@ -62,17 +67,19 @@ function App() {
           {/* the below ones are protected routes which will check the roles that are given from the backend */}
           {/* <Route element={<RequireAuth allowedRoles={['admin']}/>}> */}
           <Route element={<RequireAuth allowedRoles={['admin']} />}>
-            <Route path='admin' element={<Admin />} />
-            <Route path='AddCategory' element={<AddCategory />} />
+            <Route path="/admin" element={<Admin />}>
+              <Route index element={<AdminHome />} />
+              <Route path='AddCategory' element={<AddCategory />} />
+            </Route>
           </Route>
 
           <Route element={<RequireAuth allowedRoles={['seller']} />}>
             <Route path="/seller" element={<SellerLayout />}>
               <Route index element={<SellerHomepage />} />
-              <Route path="productdata" element={<ProductData/>}/>
+              <Route path="productdata" element={<ProductData />} />
               <Route path="AddProduct" element={<AddProduct />} />
-              <Route path="Update/:id" element={<UpdateProduct/>}/>
-              <Route path="orders" element={<Orders/>}/>
+              <Route path="Update/:id" element={<UpdateProduct />} />
+              <Route path="orders" element={<Orders />} />
             </Route>
 
           </Route>
@@ -81,7 +88,7 @@ function App() {
             <Route path='lounge' element={<Lounge />} />  {/* lounge can be accessed both by admins and sellers */}
           </Route>
 
-          {/* catch all 404 page  */}
+          {/* catch all 404 401 page  */}
           <Route path="unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<Notfound />} />
         </Routes>
