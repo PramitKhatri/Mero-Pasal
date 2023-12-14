@@ -2,8 +2,10 @@ import logo from '../images/logo2.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 const Header = () => {
+  const [searchparam,setSearchparam]=useState('')
   const user = localStorage.getItem('user')
   const navigate=useNavigate()
   const logout=()=>{
@@ -11,6 +13,15 @@ const Header = () => {
     navigate('/')
     window.location.reload()  //this reloads the page to show changes.
   }
+
+  const search=(e)=>{
+    e.preventDefault()  //do this so that the page doesnot refresh and delete all location data
+    navigate(`/product/search`,{state:{searchparameter:searchparam}})
+  }
+  useEffect(()=>{
+    console.log(searchparam)
+  },[searchparam])
+
   return (
     <nav>
       <div class="logo"><a href="/"><img src={logo} alt="logo" /></a></div>
@@ -24,9 +35,9 @@ const Header = () => {
       </ul>
 
       <div className="nav-right">
-        <form className='search'>
-          <input type="search" placeholder='search' className='rounded' />
-          <button><FontAwesomeIcon className='icon' icon={faMagnifyingGlass} /></button>
+        <form className='search' onSubmit={search}>
+          <input type="search" placeholder='search' className='rounded' value={searchparam} onChange={e=>setSearchparam(e.target.value)} />
+          <button><FontAwesomeIcon className='icon' icon={faMagnifyingGlass}/></button>
         </form>
         {user ?
         <div>

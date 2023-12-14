@@ -1,5 +1,5 @@
 from django.urls import path,include
-from product.views import ProductViewSet,ProductView,Productupdatedelete,FilteredProduct,ProductViewForAdmin
+from product.views import ProductViewSet,ProductView,Productupdatedelete,FilteredProduct,ProductViewForAdmin,ProductSearchView
 from rest_framework.routers import DefaultRouter
 
 productrouter=DefaultRouter()
@@ -12,5 +12,6 @@ urlpatterns=[
     path('api/',include(productrouter.urls)),
     path('productupdatedelete/<int:pk>/',Productupdatedelete.as_view(),name='product-delete-update'),
     path('productviewadmin/',ProductViewForAdmin.as_view(),name='product_view_admin'),
+    path('search/product',ProductSearchView.as_view(),name='product_search')
     
 ]

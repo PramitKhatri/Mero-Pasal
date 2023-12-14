@@ -29,6 +29,7 @@ import Orders from "./pages/Seller/Orders";
 import SignUpOptions from "./components/SignUpOptions";
 import SellerSignup from "./pages/Seller/SellerSignup";
 import AdminHome from "./pages/Admin/AdminHome";
+import Search from "./components/Search";
 
 
 
@@ -48,6 +49,7 @@ function App() {
             <Route path='login' element={<Login />} />
             <Route path="productdetails/:productid" element={<ProductDetails />} />
             <Route path="product/:category" element={<Filtered_Product />} />
+            <Route path="product/search" element={<Search/>}/>
 
             <Route path="esewa_payment_success" element={<EsewaSuccess />} />
             <Route path="esewa_payment_failed" element={<EsewaFailed />} />

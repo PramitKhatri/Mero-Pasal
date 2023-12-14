@@ -11,7 +11,7 @@ from rest_framework.permissions import (
 from django.db import IntegrityError
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
-from rest_framework import viewsets, generics, status, permissions
+from rest_framework import viewsets, generics, status, permissions,filters
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import permission_classes
@@ -131,3 +131,11 @@ class ProductViewForAdmin(APIView):
     def delete(self,request,format=None):
         print(request.data)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ProductSearchView(generics.ListAPIView):
+    permission_classes=[AllowAny]
+    queryset=Product.objects.all()
+    serializer_class=ProductSerializerForAdmin #i am using this because it has both the category and seller model accesible
+    filter_backends=[filters.SearchFilter]
+    search_fields=['product_name','description','category__category','seller__username','seller__first_name','seller__last_name']
+
