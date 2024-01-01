@@ -32,6 +32,7 @@ const MyOrders = () => {
         return accumulator.concat(SingleOrderItemDetail.data)
       }
       return accumulator
+
     }, [])
 
     console.log("allorderitems: " + JSON.stringify(allOrderItems))
@@ -44,10 +45,18 @@ const MyOrders = () => {
     if (orders.length > 0) {
       getOrderItemDetails()
     }
-  }, [orders, getOrderItemDetails])
+  }, [orders])
 
 
   // console.log(product)
+
+  const payment_status=(bool)=>{
+    if(bool==true){
+      return "paid"
+    }else{
+      return "not paid"
+    }
+  }
 
 
   return (
@@ -64,6 +73,8 @@ const MyOrders = () => {
               <th>Product Name</th>
               <th>Price</th>
               <th>Quantity</th>
+              <th>Payment</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
 
@@ -74,6 +85,8 @@ const MyOrders = () => {
                 <td>{item.product.product_name}</td>
                 <td>{item.product.price}</td>
                 <td>{item.quantity}</td>
+                <td>{payment_status(item.order.payment_status)}</td>
+                <td>{item.order_status}</td>
                 <td>
                   <button className='bg-amber-400 hover:bg-amber-600 cart-delete'  >Delete</button>
                 </td>

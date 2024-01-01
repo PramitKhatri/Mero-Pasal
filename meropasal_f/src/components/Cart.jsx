@@ -57,6 +57,8 @@ const Cart = () => {
         localStorage.setItem('MyCart', JSON.stringify(updatedcart))
         toast.success("Item deleted")
     }
+
+    
     const OrderNow = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
         setOrderClicked(true)

@@ -25,6 +25,7 @@ class PaymentUpdateSerializer(serializers.ModelSerializer):
 
 class OrderItemSerializerToSendBack(serializers.ModelSerializer):
     product=ProductSerializer()
+    order=OrderDetailSerializer()
 
     class Meta:
         model=OrderItem
@@ -39,3 +40,8 @@ class OrderItemSerializerToSendBackToSeller(serializers.ModelSerializer):
         model=OrderItem
         fields='__all__'
     
+    
+class OrderItemSerializerToUpdate(serializers.ModelSerializer):
+    class Meta:
+        model=OrderItem
+        fields=['id','order_status']

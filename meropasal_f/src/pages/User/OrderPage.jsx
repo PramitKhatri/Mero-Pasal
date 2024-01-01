@@ -9,7 +9,7 @@ const OrderPage = (props) => {
   const [paymentmethod, setPaymentMethod] = useState('')
   const [selectedMethod, setSelectedMethod] = useState('')
 
-  const [orderdataforEsewa,setOrderdataforEsewa]=useState({})
+  const [orderdataforEsewa, setOrderdataforEsewa] = useState({})
 
   const productid = props.data.product.id  //do this things inside async function and loop over every element in cart
   console.log(props)
@@ -122,105 +122,111 @@ const OrderPage = (props) => {
         quantity: product.quantity
       }))
 
-      const response=await axios.post(`http://localhost:8000/order/${userid}/`, { order_detail: order_detail, order_items: order_items }, { headers: { 'Content-Type': "application/json", "Authorization": `Token ${userdata.token}` } });
+      const response = await axios.post(`http://localhost:8000/order/${userid}/`, { order_detail: order_detail, order_items: order_items }, {
+        headers: { 
+          'Content-Type': "application/json", 
+          "Authorization": `Token ${userdata.token}` }
+      })
+      // localStorage.removeItem('MyCart')
+
       console.log(response)
       if (selectedMethod === '2') {
 
-        callEsewa({order_id:response.data.id,price:response.data.total_price})
-        console.log("orderid: "+response.data.id)
-        console.log("amt: "+response.data.total_price)
+        callEsewa({ order_id: response.data.id, price: response.data.total_price })
+        console.log("orderid: " + response.data.id)
+        console.log("amt: " + response.data.total_price)
+      }
+
+
+      console.log("orders: " + JSON.stringify(order_detail))
+      console.log("order item: " + JSON.stringify(order_items))
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const callEsewa = (orderdata) => {
+    var path = "https://uat.esewa.com.np/epay/main";
+
+    console.log('order data in esewa: ' + JSON.stringify(orderdata)) //to check is this function is running or not.
+    var params = {
+      amt: orderdata.price,
+      psc: 0,
+      pdc: 0,
+      txAmt: 0,
+      tAmt: orderdata.price,
+      pid: orderdata.order_id,
+      scd: "EPAYTEST",
+      su: "http://localhost:3000/esewa_payment_success",
+      fu: "http://localhost:3000/esewa_payment_failed"
     }
 
+    function post(path, params) {
+      var form = document.createElement("form");
+      form.setAttribute("method", "POST");
+      form.setAttribute("action", path);
 
-    console.log("orders: " + JSON.stringify(order_detail))
-    console.log("order item: " + JSON.stringify(order_items))
+      for (var key in params) {
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", key);
+        hiddenField.setAttribute("value", params[key]);
+        form.appendChild(hiddenField);
+      }
 
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-const callEsewa = (orderdata) => {
-  var path = "https://uat.esewa.com.np/epay/main";
-
-  console.log('order data in esewa: ' + JSON.stringify(orderdata)) //to check is this function is running or not.
-  var params = {
-    amt: orderdata.price,
-    psc: 0,
-    pdc: 0,
-    txAmt: 0,
-    tAmt: orderdata.price,
-    pid: orderdata.order_id,
-    scd: "EPAYTEST",
-    su: "http://localhost:3000/esewa_payment_success",
-    fu: "http://localhost:3000/esewa_payment_failed"
-  }
-
-  function post(path, params) {
-    var form = document.createElement("form");
-    form.setAttribute("method", "POST");
-    form.setAttribute("action", path);
-
-    for (var key in params) {
-      var hiddenField = document.createElement("input");
-      hiddenField.setAttribute("type", "hidden");
-      hiddenField.setAttribute("name", key);
-      hiddenField.setAttribute("value", params[key]);
-      form.appendChild(hiddenField);
+      document.body.appendChild(form);
+      form.submit();
+      // document.body.removeChild(form);
     }
-
-    document.body.appendChild(form);
-    form.submit();
-    // document.body.removeChild(form);
+    //call the function . it is not in documentation.
+    post(path, params);
   }
-  //call the function . it is not in documentation.
-  post(path, params);
-}
 
 
 
-useEffect(() => {
-  console.log(selectedMethod)
-}, [selectedMethod])
+  useEffect(() => {
+    console.log(selectedMethod)
+  }, [selectedMethod])
 
-return (
-  <>
-    <div>
-      <form className="order-form" onSubmit={OrderHandler}>
-        <div className="order-input">
-          <label htmlFor="Address">Address</label>
-          <input type="text" id="Address" onChange={(event) => { setAddress(event.target.value) }} value={address} required />
-        </div>
-        <div className="order-input">
-          <label htmlFor="City">City</label>
-          <input type="text" id="City" onChange={(event) => { setCity(event.target.value) }} value={city} required />
-        </div>
-        <div>
-          <label htmlFor="paymentmethod">Payment Method:</label>
+  return (
+    <>
+      <div>
+        <form className="order-form" onSubmit={OrderHandler}>
+          <div className="order-input">
+            <label htmlFor="Address">Address</label>
+            <input type="text" id="Address" onChange={(event) => { setAddress(event.target.value) }} value={address} required />
+          </div>
+          <div className="order-input">
+            <label htmlFor="City">City</label>
+            <input type="text" id="City" onChange={(event) => { setCity(event.target.value) }} value={city} required />
+          </div>
+          <div>
+            <label htmlFor="paymentmethod">Payment Method:</label>
 
-          {paymentmethod.length > 0 ? (
-            <select id="paymentmethod" onChange={(event) => setSelectedMethod(event.target.value)} value={selectedMethod} required>
-              <option value="">Select an option</option>
-              {
-                paymentmethod.map((paymentobj, index) => (
-                  <option key={index} value={paymentobj.id}>{paymentobj.paymentmethod}</option>
-                ))
-              }
+            {paymentmethod.length > 0 ? (
+              <select id="paymentmethod" onChange={(event) => setSelectedMethod(event.target.value)} value={selectedMethod} required>
+                <option value="">Select an option</option>
+                {
+                  paymentmethod.map((paymentobj, index) => (
+                    <option key={index} value={paymentobj.id}>{paymentobj.paymentmethod}</option>
+                  ))
+                }
 
-            </select>
-          ) : (
-            <span>loading payment methods...</span>
-          )
-          }
-        </div>
+              </select>
+            ) : (
+              <span>loading payment methods...</span>
+            )
+            }
+          </div>
 
-        <button>Order Now</button>
+          <button>Order Now</button>
 
-      </form>
-    </div>
+        </form>
+      </div>
 
-  </>
-)
+    </>
+  )
 }
 
 export default OrderPage

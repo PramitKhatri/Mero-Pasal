@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets,permissions,status,generics
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from userorders.models import PaymentMethod,Order,OrderItem
-from userorders.serializers import PaymentMethodSerializer,OrderDetailSerializer,OrderItemSerializer,OrderItemSerializerToSendBack,OrderItemSerializerToSendBackToSeller
+from userorders.serializers import PaymentMethodSerializer,OrderDetailSerializer,OrderItemSerializer,OrderItemSerializerToSendBack,OrderItemSerializerToSendBackToSeller,OrderItemSerializerToUpdate
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -65,6 +65,8 @@ class OrderUpdateView(generics.UpdateAPIView):
             serializer.save()
             return Response({"msg": "order paid"}, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
 
 
 class OrderItemToSendBack(APIView):
@@ -75,6 +77,8 @@ class OrderItemToSendBack(APIView):
         orderitems=OrderItem.objects.filter(order=orderid)
         serializer=OrderItemSerializerToSendBack(orderitems,many=True,context={"request": request})
         return Response(serializer.data)
+    
+    
 
 class OrderItemToSendBackToSeller(APIView):
     permission_classes=[IsAuthenticated]
@@ -89,13 +93,14 @@ class OrderItemToSendBackToSeller(APIView):
 
 # for now this code wont do anything as orderstatus property needs to be changed to belong to orderitem
     def put(self,request,sellerid,format=None):
-        print(request.data)
+        print(" request data: ",request.data)
 
         orderitem=OrderItem.objects.get(id=request.data.get('id'))
-        print(orderitem)
+        print("orderitem: ",orderitem)
 
-        serializer=OrderItemSerializerToSendBackToSeller(orderitem,data=request.data.get('order_status'))
+        serializer=OrderItemSerializerToUpdate(orderitem,data={'order_status':request.data.get('order_status')})
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
-            return Response(None)
-        return Response(None)
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)

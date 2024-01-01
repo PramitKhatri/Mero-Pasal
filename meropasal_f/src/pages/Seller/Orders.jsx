@@ -39,14 +39,20 @@ const Orders = () => {
         }
     }
 
-    const orderstatusupdate = (data) => {
-        console.log(data)
-        axios.put(`http://localhost:8000/getordersforseller/${userdata.user.id}/`, { id: data.orderid, order_status: data.order_status }, {
+    const orderstatusupdate = (item) => {
+        console.log(item)
+        const data={
+            id:item.id,
+            order_status: item.order_status 
+        }
+
+        console.log("data to send: "+JSON.stringify(data))
+        axios.put(`http://localhost:8000/getordersforseller/${userdata.user.id}/`, data, {
             'headers': {
                 'Authorization': `token ${userdata.token}`
             }
         })
-            .then(() => window.location.reload)
+            .then(() => window.location.reload())
             .catch(err => console.log(err))
     }
 
@@ -71,12 +77,12 @@ const Orders = () => {
                             <td>{item.order.address},{item.order.city}</td>
                             <td>{payment_status(item.order.payment_status)}</td>
                             <td>
-                                {Order_Status(item.order.order_status)}
+                                {Order_Status(item.order_status)}
                                 <div className="orderstatus">
-                                    <button onClick={() => orderstatusupdate({ orderid: item.id, order_status: 'pending' })} className="hover:underline">pending</button>
-                                    <button onClick={() => orderstatusupdate({ orderid: item.id, order_status: 'shipped' })} className="hover:underline">shipped</button>
-                                    <button onClick={() => orderstatusupdate({ orderid: item.id, order_status: 'delivered' })} className="hover:underline">delivered</button>
-                                    <button onClick={() => orderstatusupdate({ orderid: item.id, order_status: 'canceled' })} className="hover:underline">canceled</button>
+                                    <button onClick={() => orderstatusupdate({'id':item.id,'order_status':'pending'})} className="hover:underline">pending</button>
+                                    <button onClick={() => orderstatusupdate({'id':item.id,'order_status':'shipped'})} className="hover:underline">shipped</button>
+                                    <button onClick={() => orderstatusupdate({'id':item.id,'order_status':'delivered'})} className="hover:underline">delivered</button>
+                                    <button onClick={() => orderstatusupdate({'id':item.id,'order_status':'canceled'})} className="hover:underline">canceled</button>
                                 </div>
 
                             </td>
