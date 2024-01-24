@@ -54,7 +54,8 @@ const SellerSignup = () => {
                 setPassword('')
                 setStaff(false)
                 setIsSubmit(true)
-                window.location.reload()
+                // window.location.reload()
+            setTimeout(()=>{navigate('/')},3000)
             } catch (err) {
                 toast.error(err.response.data.error)
             }

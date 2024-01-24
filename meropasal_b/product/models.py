@@ -18,4 +18,15 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
+    
+    
+class Ratings(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    rating=models.FloatField()
+    review=models.CharField(max_length=255)
+    review_at=models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'user:{self.user.username},product:{self.product.product_name},rating:{self.rating}'
 

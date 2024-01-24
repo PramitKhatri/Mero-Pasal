@@ -1,5 +1,8 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify'
+
 
 const OrderPage = (props) => {
   const userdata = JSON.parse(localStorage.getItem('user'))
@@ -10,6 +13,8 @@ const OrderPage = (props) => {
   const [selectedMethod, setSelectedMethod] = useState('')
 
   const [orderdataforEsewa, setOrderdataforEsewa] = useState({})
+
+  const navigate=useNavigate()
 
   const productid = props.data.product.id  //do this things inside async function and loop over every element in cart
   console.log(props)
@@ -128,6 +133,9 @@ const OrderPage = (props) => {
           "Authorization": `Token ${userdata.token}` }
       })
       // localStorage.removeItem('MyCart')
+      // setTimeout(()=>{navigate(`/`)},2000)
+      toast.success('product ordered successfully')
+      setTimeout(()=>{window.location.reload()},2000);
 
       console.log(response)
       if (selectedMethod === '2') {
@@ -191,6 +199,7 @@ const OrderPage = (props) => {
 
   return (
     <>
+            {/* <ToastContainer theme="colored" position="top-right" /> */}
       <div>
         <form className="order-form" onSubmit={OrderHandler}>
           <div className="order-input">

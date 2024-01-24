@@ -16,8 +16,8 @@ const AdminHeader = () => {
             <ul>
                 <li><a href="/admin">Home</a></li>
                 <li><a href="/admin">All Products</a></li>
-                <li><a href="/seller/orders">All users</a></li>
-                <li><a href="/AddCategory">Add Category</a></li>
+                <li><a href="/sss">All users</a></li>
+                <li><a href="admin/AddCategory">Add Category</a></li>
             </ul>
 
             <div className="nav-right">

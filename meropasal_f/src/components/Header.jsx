@@ -27,8 +27,8 @@ const Header = () => {
       <div class="logo"><a href="/"><img src={logo} alt="logo" /></a></div>
       <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="#">Shop all</a></li>
-        <li><a href="#">New arrivals</a></li>
+        <li><a href="/">Shop all</a></li>
+        <li><a href="/">New arrivals</a></li>
         
         <li><a href={user?'/cart':'/login'}>Cart</a></li>
         <li><a href={user?'/myorders':'/login'}>MyOrders</a></li>

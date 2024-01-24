@@ -86,6 +86,8 @@ const AddProduct = () => {
             <div>
                 <p>{error}</p>
                 <form onSubmit={SubmitHandler} className="form">
+                <h2 >Add Product</h2>
+
                     <div>
                         <label htmlFor="name">Product Name</label>
                         <input type="text" id="name" value={product_name} onChange={e => SetProductName(e.target.value)} required />

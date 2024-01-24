@@ -54,7 +54,9 @@ const Signup = () => {
                 setPassword('')
                 setStaff(false)
                 setIsSubmit(true)
-                window.location.reload()
+                // window.location.reload()
+            setTimeout(()=>{navigate('/')},3000)
+
             } catch (err) {
                 toast.error(err.response.data.error)
             }
@@ -146,7 +148,7 @@ const Signup = () => {
                                     <p className="text-red-500">{formErrors.password}</p>
                                 )}
                             </div>
-                            <div className='mb-2'>
+                            {/* <div className='mb-2'>
                                 <input 
                                 type="checkbox"  
                                 id="seller"
@@ -155,7 +157,7 @@ const Signup = () => {
                                 checked={is_staff}
                                  />
                                 <label htmlFor="seller">I want to be a seller.</label>
-                            </div>
+                            </div> */}
                             <a className='hover:text-red-500 underline' href="/resetuserpassword">Forgot your password?</a>
                             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-4">Signup</button>
                         </form>
