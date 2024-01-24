@@ -1,6 +1,6 @@
 import logo from '../../images/logo2.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 const SellerHeader = () => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -14,7 +14,7 @@ const SellerHeader = () => {
             <div class="logo"><a href="/"><img src={logo} alt="logo" /></a></div>
             <ul>
                 <li><a href="/seller">Home</a></li>
-                <li><a href="#">My Products</a></li>
+                <li><a href="/seller">My Products</a></li>
                 <li><a href="/seller/orders">Orders</a></li>
                 <li><a href="/seller/AddProduct">Add Products</a></li>
             </ul>

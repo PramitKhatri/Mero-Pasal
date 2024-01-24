@@ -1,7 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 
 const OrderPage = (props) => {
@@ -12,9 +11,7 @@ const OrderPage = (props) => {
   const [paymentmethod, setPaymentMethod] = useState('')
   const [selectedMethod, setSelectedMethod] = useState('')
 
-  const [orderdataforEsewa, setOrderdataforEsewa] = useState({})
 
-  const navigate=useNavigate()
 
   const productid = props.data.product.id  //do this things inside async function and loop over every element in cart
   console.log(props)

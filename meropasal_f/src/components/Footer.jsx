@@ -10,12 +10,12 @@ const Footer = () => {
         </div>
         <div className="footer-mid">
           <strong>Quick Links</strong>
-          <a href="#">About Us</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms and Condition</a>
+          <a href="/">About Us</a>
+          <a href="/">Privacy Policy</a>
+          <a href="/">Terms and Condition</a>
           <hr />
-          <a href="#">Contact Us</a>
-          <a href="#">Work with us</a>
+          <a href="/">Contact Us</a>
+          <a href="/">Work with us</a>
         </div>
         <div className="footer-right">
           <p className='-mt-12'><strong>Subscribe to our newsletters...</strong></p>

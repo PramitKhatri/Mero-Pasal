@@ -5,7 +5,7 @@ import OrderPage from '../pages/User/OrderPage'
 
 const Cart = () => {
     const [product, setProduct] = useState([])
-    const [quantity, setQuantity] = useState(product.quantity)  //future note maybe do a useeffect hook that will update quantity when quantity changes
+    const quantity = product.quantity  //future note maybe do a useeffect hook that will update quantity when quantity changes
     const [total, setTotal] = useState()
 
     const [orderclicked, setOrderClicked] = useState(false)
@@ -27,12 +27,12 @@ const Cart = () => {
         console.log("total amt should be:" + total)
         console.log("total amt should be:" + totalamt)
 
-    }, [])
+    }, [total])
     console.log("total amt should be:" + total)
 
     const decreasequantity = (id) => {
         const updateproducts = product.map(item => {
-            if (item.id == id && item.quantity > 1) {
+            if (item.id === id && item.quantity > 1) {
                 return { ...item, quantity: item.quantity - 1 } // ...item = item value doesnot changes only quantity
             }
             return item
@@ -42,7 +42,7 @@ const Cart = () => {
     }
     const increasequantity = (id) => {
         const updateproducts = product.map(item => {
-            if (item.id == id) {
+            if (item.id === id) {
                 return { ...item, quantity: item.quantity + 1 }
             }
             return item

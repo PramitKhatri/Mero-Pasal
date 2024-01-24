@@ -22,7 +22,7 @@ import UpdateProduct from "./pages/Seller/UpdateProduct";
 import Profile from "./pages/User/Profile";
 import Email from "./components/Email";
 import ResetPassword from "./components/ResetPassword";
-import Filtered_Product from "./pages/Filtered_Product";
+import FilteredProduct from "./pages/FilteredProduct";
 import EsewaFailed from "./components/EsewaFailed";
 import EsewaSuccess from "./components/EsewaSuccess";
 import Orders from "./pages/Seller/Orders";
@@ -48,7 +48,7 @@ function App() {
             <Route path="signup/seller" element={<SellerSignup />} />
             <Route path='login' element={<Login />} />
             <Route path="productdetails/:productid" element={<ProductDetails />} />
-            <Route path="product/:category" element={<Filtered_Product />} />
+            <Route path="product/:category" element={<FilteredProduct />} />
             <Route path="product/search" element={<Search/>}/>
 
             <Route path="esewa_payment_success" element={<EsewaSuccess />} />

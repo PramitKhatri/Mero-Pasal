@@ -14,7 +14,7 @@ const AdminHome = () => {
         })
             .then(res => SetProduct(res.data))
             .catch(err => console.log(err))
-    }, [])
+    })
     console.log(product)
 
     const DeleteProduct = (id) => {

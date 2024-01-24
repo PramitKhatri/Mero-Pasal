@@ -1,9 +1,9 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import Card from "../components/Card"
 
-const Filtered_Product = () => {
+const FilteredProduct = () => {
   const [product, SetProduct] = useState([])
   const [category, setCategory] = useState([])
 
@@ -13,7 +13,7 @@ const Filtered_Product = () => {
     axios.get(`http://localhost:8000/filterproduct/${params.category}/`)
       .then(res => SetProduct(res.data))
       .catch(err => console.log(err))
-  }, [])
+  }, [params.category])
 
   useEffect(() => {
     axios.get('http://localhost:8000/getcategory/')
@@ -43,4 +43,4 @@ const Filtered_Product = () => {
   )
 }
 
-export default Filtered_Product
+export default FilteredProduct

@@ -22,7 +22,7 @@ const EsewaSuccess = () => {
       .catch(err => console.log("error is :" + err))
 
 
-  }, [])
+  }, [params,payment_status])
   return (
     <>
       <h2>Payment Successful</h2>

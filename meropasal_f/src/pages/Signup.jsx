@@ -70,7 +70,7 @@ const Signup = () => {
         if (Object.keys(formErrors).length === 0 && isSubmit) {  //this checks if the keys of formerrors object is empty
             navigate('/')
         }
-    }, [formErrors])
+    }, [formErrors,isSubmit,navigate])
 
 
 

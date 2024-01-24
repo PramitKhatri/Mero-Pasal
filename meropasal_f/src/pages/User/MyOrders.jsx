@@ -45,13 +45,13 @@ const MyOrders = () => {
     if (orders.length > 0) {
       getOrderItemDetails()
     }
-  }, [orders])
+  })
 
 
   // console.log(product)
 
   const payment_status=(bool)=>{
-    if(bool==true){
+    if(bool===true){
       return "paid"
     }else{
       return "not paid"

@@ -11,7 +11,7 @@ const ResetPassword = () => {
     const params=useParams()
 
     useEffect(()=>{
-        if (password!=cpassword){
+        if (password!==cpassword){
             setError('password and Confirm password doesnot match.')
         }else{
             setError('')
@@ -22,7 +22,7 @@ const ResetPassword = () => {
         e.preventDefault()
         const userid=params.userid
         const token=params.token
-        if (error.length==0){
+        if (error.length===0){
         axios.post(`http://localhost:8000/resetpassword/${userid}/${token}/`,{password:password})
         .then(()=>{
             setMessage('password changed successfully')

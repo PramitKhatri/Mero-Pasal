@@ -15,7 +15,7 @@ const ProductDetails = () => {
     useEffect(()=>{
         product.quantity=quantity
         console.log(product)
-    },[quantity])
+    },[quantity,product])
 
 
     const [orderclicked,setOrderClicked]=useState(false)
@@ -38,7 +38,7 @@ const ProductDetails = () => {
                 .then(sellerdata => setSeller(sellerdata.data))
                 .catch(err => console.log(err))
         }
-    }, [])
+    })
 
     useEffect(()=>{
         
@@ -102,7 +102,7 @@ const ProductDetails = () => {
                             <p className='product-rating'>this is rating</p>
                         </div>
                         <p className='product-description'>{product.description}</p>
-                        <p className='product-category'>category:<a style={{ textDecoration: 'underline' }} className='hover:text-red-700'>{product.category}</a></p>
+                        <p className='product-category'>category:<a href='/' style={{ textDecoration: 'underline' }} className='hover:text-red-700'>{product.category}</a></p>
                         <div className="product-quantity">
                             <button className='hover:bg-slate-400' onClick={decreasequantity}>-</button>
                             <input type="number" readOnly value={quantity} onChange={e=>setQuantity(e.target.value)} />

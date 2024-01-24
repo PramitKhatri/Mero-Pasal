@@ -14,13 +14,13 @@ const Orders = () => {
         })
             .then(res => setOrders(res.data))
             .catch(err => console.log(err))
-    }, [])
+    })
     console.log("orders are: " + JSON.stringify(orders))
 
 
 
     const payment_status = (payment_status) => { //simple function to check if it is paid or not
-        if (payment_status == true) {
+        if (payment_status === true) {
             return "paid"
         } else {
             return "Not paid"
@@ -28,13 +28,13 @@ const Orders = () => {
     }
 
     const Order_Status = (order_status) => {
-        if (order_status == 'pending') {
+        if (order_status === 'pending') {
             return <button className="bg-yellow-400 currentorderstatus">pending</button>
-        } else if (order_status == 'shipped') {
+        } else if (order_status === 'shipped') {
             return <button className="bg-blue-400 currentorderstatus">shipped</button>
-        } else if (order_status == 'delivered') {
+        } else if (order_status === 'delivered') {
             return <button className="bg-green-400 currentorderstatus">delivered</button>
-        } else if (order_status == 'canceled') {
+        } else if (order_status === 'canceled') {
             return <button className="bg-red-400 currentorderstatus">canceled</button>
         }
     }
